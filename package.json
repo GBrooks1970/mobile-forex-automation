@@ -1,0 +1,15 @@
+{
+  "name": "mobile-forex-automation",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "description": "Mobile test-automation portfolio project: a responsive-web forex-demo SUT driven by Playwright mobile emulation, with a Vitest-tested pure P&L core.",
+  "license": "MIT",
+  "scripts": {
+    "//": "Scripts are wired in MF-01 (Phase 1). Placeholders below fail loudly until then.",
+    "verify": "echo \"verify not yet wired — see docs/backlog.md MF-01\" && exit 1"
+  },
+  "engines": {
+    "node": ">=20"
+  }
+}

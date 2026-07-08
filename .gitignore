@@ -1,0 +1,16 @@
+# Dependencies / build
+node_modules/
+dist/
+
+# Playwright / test artefacts
+/test-results/
+/playwright-report/
+/playwright/.cache/
+/blob-report/
+
+# Local tooling / OS
+.claude/
+.DS_Store
+Thumbs.db
+*.swp
+*~
