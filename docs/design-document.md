@@ -3,8 +3,9 @@
 **Version:** v0.1
 **Date:** 2026-07-08T00:00:00Z
 **Author:** Gary Brooks (with Claude Fable 5)
-**Reviewer:** CLAUDE Fable 5 (pending human review)
-**Status:** Draft — awaiting review before Phase 1
+**Reviewer:** Gary Brooks (approved as-is, 2026-07-08)
+**Status:** Approved — Phase 1 authorised; open questions Q1–Q3 resolved to their proposed defaults
+(Vite + vanilla TS; Screenplay layer at MF-10; repo name `mobile-forex-automation`)
 
 > Adapted from `templates/design-document.template.md`; sections that do not apply to a greenfield
 > test-automation project are marked `N/A — <reason>` per the template's own rule.
@@ -276,3 +277,4 @@ financing; *SUT* — system under test. **References:** the forex PRS
 | Version | Date | Author | Changes |
 |---|---|---|---|
 | v0.1 | 2026-07-08 | Gary Brooks + Claude Fable 5 | Initial draft for review (Phase 0) |
+| v0.1 (approved) | 2026-07-08 | Gary Brooks | Approved as-is; Q1–Q3 resolved to proposed defaults; Phase 1 authorised |

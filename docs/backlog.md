@@ -27,8 +27,10 @@ Nothing is implemented yet — this is Phase 0 (docs + scaffold). The items belo
 build order; each becomes one branch + PR when actioned.
 
 ### Phase 1 — Build the SUT (minimal vertical slice)
-- **MF-01 — Scaffold: Vite + TypeScript + CI skeleton.** Runnable empty app, `npm run verify`
-  (typecheck + unit + e2e placeholders) wired, GitHub Actions skeleton (Node 24).
+- **MF-01 — Scaffold: Vite + TypeScript + CI skeleton.** ✅ **DONE 2026-07-08** (PR #1): app shell
+  with stable testids; `npm run verify` = tsc strict + Vitest unit lane + Playwright e2e against the
+  **built** app (`vite preview`); CI Node 24 (checkout/setup-node@v5, timeout, concurrency,
+  least-privilege token, failure-only report upload). Local + CI verify green; audit 0.
 - **MF-02 — Pure P&L + validation core.** `pipDifference`, `grossPnlGbp`, `commission`, `swap`,
   `netPnl`, `validateOpen/Close`; money as integer micro-units. (Buildable before the UI.)
 - **MF-03 — Deterministic seeded mock feed.** `createFeed(seed)` reproducible tick stream; `?seed=`

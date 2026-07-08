@@ -17,8 +17,9 @@ The automation is the deliverable; the SUT exists only to be tested.
 
 ## Status
 
-**Phase 0 — design.** Scaffold + design document only; nothing implemented yet. See
-[`docs/design-document.md`](docs/design-document.md) (v0.1, in review),
+**Phase 1 — building the SUT slice.** Design approved (v0.1, 2026-07-08); MF-01 scaffold in place
+(Vite + TypeScript, Vitest + Playwright lanes wired, CI on Node 24). See
+[`docs/design-document.md`](docs/design-document.md),
 [`docs/adr/ADR-0001-approach.md`](docs/adr/ADR-0001-approach.md) (approach: web + Playwright
 emulation, "A now, native later"), and [`docs/backlog.md`](docs/backlog.md) (roadmap MF-01…MF-14).
 
@@ -28,11 +29,13 @@ Approach **A** (web + Playwright mobile emulation) — proportionate and CI-clea
 Actions, no device farm), deterministic via the seeded feed. A native layer (Appium/Maestro) is an
 optional later **Phase B** (ADR-0001).
 
-## Planned commands
+## Commands
 
 ```bash
 npm install
-npm run verify   # typecheck + unit (Vitest) + e2e (Playwright)  — wired in MF-01
+npx playwright install chromium   # once, for the e2e lane
+npm run dev      # SUT dev server
+npm run verify   # typecheck + unit (Vitest) + e2e (Playwright against the built app)
 ```
 
 ## Licence

@@ -1,0 +1,19 @@
+/* Minimal shell styling (MF-01). The responsive layout system lands in MF-08. */
+:root {
+  --ink: #16202b;
+  --bg: #f7f9fc;
+  --accent: #2f5d8a;
+}
+* { box-sizing: border-box; }
+body {
+  margin: 0;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  color: var(--ink);
+  background: var(--bg);
+}
+.app-header {
+  padding: 16px 20px;
+  border-bottom: 3px solid var(--accent);
+}
+.app-header h1 { margin: 0; font-size: 1.4rem; }
+.tagline { margin: 4px 0 0; color: #5a6672; font-size: 0.85rem; }
