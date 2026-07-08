@@ -189,8 +189,13 @@ The heart of the project's testability. Functions mirror the PRS pseudocode:
 History rows are immutable once written.
 
 ### 5.3 Mock price feed
-`createFeed(seed)` yields a reproducible tick stream per pair (seeded PRNG). Test mode: `?seed=<n>`
-freezes the sequence so E2E assertions on prices/flashes/P&L are exact.
+`createFeed(seed)` yields a reproducible tick stream per pair (seeded PRNG, per-pair streams derived
+from `(seed, pair)` so polling order cannot cross-contaminate). Test mode: `?seed=<n>` freezes the
+sequence so E2E assertions on prices/flashes/P&L are exact.
+
+**MVP conversion simplification:** the P&L engine's GBP conversion rate is taken from the live
+GBP/USD feed price for *all* non-GBP quote currencies — exact for USD quotes, an approximation for
+JPY/CAD quotes. Acceptable for a demo SUT; refine per-quote if it ever matters.
 
 ### 5.4 Data model
 Per PRS §"open_trades" / "trade_history" — `trade_id`, `currency_pair`, `trade_direction`,
