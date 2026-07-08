@@ -17,3 +17,21 @@ body {
 }
 .app-header h1 { margin: 0; font-size: 1.4rem; }
 .tagline { margin: 4px 0 0; color: #5a6672; font-size: 0.85rem; }
+
+/* MF-04: login + shell chrome. The responsive layout system lands in MF-08. */
+.pane { padding: 20px; max-width: 480px; }
+.login-pane label { display: block; margin: 0 0 12px; font-size: 0.9rem; }
+.login-pane input {
+  display: block; width: 100%; margin-top: 4px; padding: 8px 10px;
+  font-size: 1rem; border: 1px solid #c8d1da; border-radius: 6px;
+}
+.login-pane button, .session-info button {
+  padding: 8px 16px; font-size: 0.95rem; border: 0; border-radius: 6px;
+  background: var(--accent); color: #fff; cursor: pointer;
+}
+.form-errors { color: #b91c1c; font-size: 0.85rem; min-height: 1em; }
+.form-errors p { margin: 0 0 4px; }
+.hint { color: #5a6672; font-size: 0.8rem; }
+.shell-header { display: flex; justify-content: space-between; align-items: center; gap: 12px; flex-wrap: wrap; }
+.session-info { display: flex; align-items: center; gap: 12px; font-size: 0.9rem; }
+.session-info .balance { font-weight: 700; }

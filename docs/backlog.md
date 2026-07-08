@@ -38,7 +38,9 @@ build order; each becomes one branch + PR when actioned.
   per-pair PRNG streams (polling-order independent), positive-integer prices over long walks,
   `parseSeed` for the `?seed=` test mode, GBP/USD-based conversion rate (MVP simplification noted
   in design §5.3). 12 further unit tests → 40 total.
-- **MF-04 — Login + demo profile.** Email/password → £10,000 demo balance.
+- **MF-04 — Login + demo profile.** ✅ **DONE 2026-07-08** (PR #3): email/password login (light
+  demo validation) → deterministic userId + £10,000 demo profile (integer pence), injected-storage
+  persistence surviving reload, sign-out; FR-1 e2e journeys + session unit tests.
 - **MF-05 — Watchlist + tick flashes.** 5 MVP pairs, green/red on tick direction.
 - **MF-06 — Order panel + open position + balance update.** Market Buy/Sell, lots, `open_trades` row.
 - **MF-07 — Close position → P&L → history.** Immutable `trade_history` row; balance update.
