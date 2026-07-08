@@ -31,10 +31,13 @@ build order; each becomes one branch + PR when actioned.
   with stable testids; `npm run verify` = tsc strict + Vitest unit lane + Playwright e2e against the
   **built** app (`vite preview`); CI Node 24 (checkout/setup-node@v5, timeout, concurrency,
   least-privilege token, failure-only report upload). Local + CI verify green; audit 0.
-- **MF-02 — Pure P&L + validation core.** `pipDifference`, `grossPnlGbp`, `commission`, `swap`,
-  `netPnl`, `validateOpen/Close`; money as integer micro-units. (Buildable before the UI.)
-- **MF-03 — Deterministic seeded mock feed.** `createFeed(seed)` reproducible tick stream; `?seed=`
-  test mode.
+- **MF-02 — Pure P&L + validation core.** ✅ **DONE 2026-07-08** (PR #1): integer money scheme
+  (points / lots2 / pence); PRS oracle pinned (62.0 pips / +£246.78 / £2.50 commission); swap incl.
+  triple-Wednesday + same-day zero; strict SL/TP validation; edge-only formatting. 28 unit tests.
+- **MF-03 — Deterministic seeded mock feed.** ✅ **DONE 2026-07-08** (PR #2): `createFeed(seed)`,
+  per-pair PRNG streams (polling-order independent), positive-integer prices over long walks,
+  `parseSeed` for the `?seed=` test mode, GBP/USD-based conversion rate (MVP simplification noted
+  in design §5.3). 12 further unit tests → 40 total.
 - **MF-04 — Login + demo profile.** ✅ **DONE 2026-07-08** (PR #3): email/password login (light
   demo validation) → deterministic userId + £10,000 demo profile (integer pence), injected-storage
   persistence surviving reload, sign-out; FR-1 e2e journeys + session unit tests.
