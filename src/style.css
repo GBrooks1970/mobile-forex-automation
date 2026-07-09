@@ -42,3 +42,16 @@ body {
 .pair-price { font-variant-numeric: tabular-nums; font-weight: 600; transition: background-color 0.3s ease; }
 tr.tick-up .pair-price { background: #d6f2e0; color: #14532d; }
 tr.tick-down .pair-price { background: #fde3e3; color: #7f1d1d; }
+
+/* MF-06: order panel + open positions. */
+.session-info .equity b, .session-info .balance b { font-variant-numeric: tabular-nums; }
+.order-pane select, .order-pane input { display: block; margin-top: 4px; padding: 8px 10px; font-size: 1rem; border: 1px solid #c8d1da; border-radius: 6px; }
+.order-pane label { display: block; margin-bottom: 10px; font-size: 0.9rem; }
+.order-buttons { display: flex; gap: 10px; }
+.order-buttons button { flex: 1; padding: 10px; font-size: 1rem; font-weight: 700; border: 0; border-radius: 6px; color: #fff; cursor: pointer; }
+.order-buttons .buy { background: #14803a; }
+.order-buttons .sell { background: #b3261e; }
+.positions { border-collapse: collapse; width: 100%; }
+.positions th, .positions td { text-align: left; padding: 6px 10px; border-bottom: 1px solid #e1e6ec; font-variant-numeric: tabular-nums; }
+.positions .pnl.pnl-up { color: #14532d; font-weight: 700; }
+.positions .pnl.pnl-down { color: #7f1d1d; font-weight: 700; }

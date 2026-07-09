@@ -46,7 +46,13 @@ build order; each becomes one branch + PR when actioned.
   per-pair seq == intervals elapsed); rows carry `data-seq`/`data-direction` so the E2E **replays
   the seeded feed and predicts the exact on-screen price** at any observed seq. 3 ticker unit tests
   + 4 e2e (5 pairs shown, deterministic-replay price match, flash colour==direction, sign-out stops).
-- **MF-06 — Order panel + open position + balance update.** Market Buy/Sell, lots, `open_trades` row.
+- **MF-06 — Order panel + open position + live floating P&L.** ✅ **DONE 2026-07-09** (PR #5):
+  `Portfolio` app-state (deterministic trade ids, no RNG); market Buy/Sell at the live feed price
+  creates an `open_trades` position validated per PRS rules; open positions panel shows entry, live
+  price, and floating (unrealised gross) P&L; equity readout = balance + total floating P&L.
+  **MVP money model** (design doc): open doesn't touch cash (paper trading, no margin), realised net
+  P&L applies on close (MF-07); MVP closes same-day so swap=0 in the UI. e2e replays the seed to
+  predict the exact floating P&L shown. 58 unit + 11 e2e.
 - **MF-07 — Close position → P&L → history.** Immutable `trade_history` row; balance update.
 - **MF-08 — Responsive/adaptive layout.** Breakpoints < 600 (mobile), > 1024 (desktop split).
 
