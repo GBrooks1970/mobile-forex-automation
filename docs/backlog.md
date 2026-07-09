@@ -53,7 +53,12 @@ build order; each becomes one branch + PR when actioned.
   **MVP money model** (design doc): open doesn't touch cash (paper trading, no margin), realised net
   P&L applies on close (MF-07); MVP closes same-day so swap=0 in the UI. e2e replays the seed to
   predict the exact floating P&L shown. 58 unit + 11 e2e.
-- **MF-07 — Close position → P&L → history.** Immutable `trade_history` row; balance update.
+- **MF-07 — Close position → P&L → history.** ✅ **DONE 2026-07-09** (PR #6): `Portfolio.close`
+  computes realised **net** P&L (gross − commission, swap 0 same-day), writes a **frozen** immutable
+  `trade_history` row (deterministic `-hNNNN` id, `MANUAL` reason), applies net to the **cash
+  balance** (the PRS "balance updates on closure"). Close button per position; trade-history panel.
+  e2e predicts net + new balance from the **app-recorded** entry/exit (race-free). PRS oracle close:
+  gross +£246.78 − £2.50 = **net £244.28**. 64 unit + 13 e2e.
 - **MF-08 — Responsive/adaptive layout.** Breakpoints < 600 (mobile), > 1024 (desktop split).
 
 ### Phase 2 — Unit / logic tests (the cheap oracle)
