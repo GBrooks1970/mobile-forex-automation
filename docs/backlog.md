@@ -59,7 +59,11 @@ build order; each becomes one branch + PR when actioned.
   balance** (the PRS "balance updates on closure"). Close button per position; trade-history panel.
   e2e predicts net + new balance from the **app-recorded** entry/exit (race-free). PRS oracle close:
   gross +£246.78 − £2.50 = **net £244.28**. 64 unit + 13 e2e.
-- **MF-08 — Responsive/adaptive layout.** Breakpoints < 600 (mobile), > 1024 (desktop split).
+- **MF-08 — Responsive/adaptive layout.** ✅ **DONE 2026-07-09** (PR #7): pure `layoutFor(width)`
+  (mobile <600 / tablet 600–1024 / desktop >1024, PRS §2.2); CSS grid workspace — single column on
+  mobile, watchlist-sidebar + main-dock split on desktop; `data-layout` reflects the breakpoint;
+  resize listener with cleanup. e2e asserts **actual geometry** (bounding boxes: mobile stacks,
+  desktop side-by-side) + live reflow across breakpoints. **Phase 1 COMPLETE.** 66 unit + 16 e2e.
 
 ### Phase 2 — Unit / logic tests (the cheap oracle)
 - **MF-09 — Unit suite vs the PRS.** Worked example (62.0 pips / +£246.78), commission, triple-Wednesday
