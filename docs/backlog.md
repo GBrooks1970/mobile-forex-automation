@@ -41,7 +41,11 @@ build order; each becomes one branch + PR when actioned.
 - **MF-04 — Login + demo profile.** ✅ **DONE 2026-07-08** (PR #3): email/password login (light
   demo validation) → deterministic userId + £10,000 demo profile (integer pence), injected-storage
   persistence surviving reload, sign-out; FR-1 e2e journeys + session unit tests.
-- **MF-05 — Watchlist + tick flashes.** 5 MVP pairs, green/red on tick direction.
+- **MF-05 — Watchlist + tick flashes.** ✅ **DONE 2026-07-09** (PR #4): 5 MVP pairs, green/red
+  flash on tick direction; a single ticker owns tick timing (one tick per pair per interval, so
+  per-pair seq == intervals elapsed); rows carry `data-seq`/`data-direction` so the E2E **replays
+  the seeded feed and predicts the exact on-screen price** at any observed seq. 3 ticker unit tests
+  + 4 e2e (5 pairs shown, deterministic-replay price match, flash colour==direction, sign-out stops).
 - **MF-06 — Order panel + open position + balance update.** Market Buy/Sell, lots, `open_trades` row.
 - **MF-07 — Close position → P&L → history.** Immutable `trade_history` row; balance update.
 - **MF-08 — Responsive/adaptive layout.** Breakpoints < 600 (mobile), > 1024 (desktop split).

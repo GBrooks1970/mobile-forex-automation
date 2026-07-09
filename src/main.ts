@@ -7,14 +7,26 @@ import {
   validateCredentials,
   type Profile,
 } from './app/session.js';
+import { startTicker, type TickerHandle } from './app/ticker.js';
+import { createFeed, parseSeed } from './core/feed.js';
 import { formatGbpPence } from './core/format.js';
+import { applyTicks, renderWatchlist } from './ui/watchlist.js';
 
-// App orchestration (MF-04): login screen <-> trading shell.
-// The watchlist / order panel / history slices land in MF-05..MF-08.
+// App orchestration (MF-04/05): login screen <-> trading shell.
+// The order panel / history / responsive slices land in MF-06..MF-08.
 
 const app = document.querySelector<HTMLElement>('#app');
 if (!app) throw new Error('App shell mount point #app not found');
 const root: HTMLElement = app;
+
+// One feed per page load, seeded from ?seed= (deterministic test mode, NFR-1).
+const feed = createFeed(parseSeed(new URLSearchParams(location.search).get('seed')));
+let ticker: TickerHandle | null = null;
+
+function stopTicker(): void {
+  ticker?.stop();
+  ticker = null;
+}
 
 function renderLogin(errorMessages: string[] = []): void {
   root.innerHTML = `
@@ -57,6 +69,7 @@ function renderLogin(errorMessages: string[] = []): void {
 }
 
 function renderShell(profile: Profile): void {
+  stopTicker();
   root.innerHTML = `
     <header class="app-header shell-header">
       <h1 data-testid="app-title">${appName}</h1>
@@ -66,14 +79,20 @@ function renderShell(profile: Profile): void {
         <button type="button" data-testid="sign-out">Sign out</button>
       </div>
     </header>
-    <section class="pane" data-testid="trading-shell">
-      <p class="hint">Watchlist, orders and history arrive in MF-05..MF-08.</p>
-    </section>
+    <div data-testid="trading-shell" data-seed="${feed.seed}">
+      ${renderWatchlist(feed)}
+      <section class="pane">
+        <p class="hint">Orders and history arrive in MF-06..MF-08.</p>
+      </section>
+    </div>
   `;
+
+  ticker = startTicker(feed, (ticks) => applyTicks(root, ticks));
 
   root
     .querySelector<HTMLButtonElement>('[data-testid="sign-out"]')
     ?.addEventListener('click', () => {
+      stopTicker();
       clearProfile(localStorage);
       renderLogin();
     });

@@ -35,3 +35,10 @@ body {
 .shell-header { display: flex; justify-content: space-between; align-items: center; gap: 12px; flex-wrap: wrap; }
 .session-info { display: flex; align-items: center; gap: 12px; font-size: 0.9rem; }
 .session-info .balance { font-weight: 700; }
+
+/* MF-05: watchlist with tick-direction flashes (PRS: green up, red down). */
+.watchlist { border-collapse: collapse; width: 100%; max-width: 420px; }
+.watchlist th, .watchlist td { text-align: left; padding: 8px 12px; border-bottom: 1px solid #e1e6ec; }
+.pair-price { font-variant-numeric: tabular-nums; font-weight: 600; transition: background-color 0.3s ease; }
+tr.tick-up .pair-price { background: #d6f2e0; color: #14532d; }
+tr.tick-down .pair-price { background: #fde3e3; color: #7f1d1d; }
