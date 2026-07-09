@@ -15,6 +15,7 @@ import { MVP_PAIRS, type CurrencyPair, type TradeDirection } from './core/types.
 import { applyTicks, renderWatchlist } from './ui/watchlist.js';
 import { parseLots2, renderOrderPanel } from './ui/orderPanel.js';
 import { renderPositions, updatePositions } from './ui/positions.js';
+import { renderHistory } from './ui/history.js';
 
 // App orchestration (MF-04/05/06): login screen <-> trading shell.
 // The close/history and responsive slices land in MF-07..MF-08.
@@ -75,11 +76,12 @@ function renderLogin(errorMessages: string[] = []): void {
   });
 }
 
-/** Refresh the equity readout (balance + total floating P&L). */
-function refreshEquity(): void {
-  if (!portfolio) return;
+/** Refresh the balance + equity readouts (balance changes only on close). */
+function refreshAccount(active: Portfolio): void {
+  const balance = root.querySelector<HTMLElement>('[data-testid="account-balance"]');
+  if (balance) balance.textContent = formatGbpPence(active.balancePence());
   const equity = root.querySelector<HTMLElement>('[data-testid="account-equity"]');
-  if (equity) equity.textContent = formatGbpPence(portfolio.equityPence(rateFor));
+  if (equity) equity.textContent = formatGbpPence(active.equityPence(rateFor));
 }
 
 function renderShell(profile: Profile): void {
@@ -101,8 +103,9 @@ function renderShell(profile: Profile): void {
       ${renderWatchlist(feed)}
       ${renderOrderPanel()}
       <div data-testid="positions-mount">${renderPositions(active, feed)}</div>
+      <div data-testid="history-mount">${renderHistory(active)}</div>
       <section class="pane">
-        <p class="hint">Closing positions &amp; history arrive in MF-07; responsive layout in MF-08.</p>
+        <p class="hint">Responsive layout arrives in MF-08.</p>
       </section>
     </div>
   `;
@@ -115,10 +118,16 @@ function renderShell(profile: Profile): void {
     placeOrder(active, direction);
   });
 
+  // Close is delegated: the positions table re-renders, so bind on its stable mount.
+  root.querySelector<HTMLElement>('[data-testid="positions-mount"]')?.addEventListener('click', (event) => {
+    const btn = (event.target as HTMLElement).closest<HTMLButtonElement>('[data-close]');
+    if (btn) closePosition(active, btn.dataset['close'] ?? '');
+  });
+
   ticker = startTicker(feed, (ticks) => {
     applyTicks(root, ticks);
     updatePositions(root, active, feed);
-    refreshEquity();
+    refreshAccount(active);
   });
 
   root
@@ -160,7 +169,24 @@ function placeOrder(active: Portfolio, direction: TradeDirection): void {
   errors.textContent = '';
   const mount = root.querySelector<HTMLElement>('[data-testid="positions-mount"]');
   if (mount) mount.innerHTML = renderPositions(active, feed);
-  refreshEquity();
+  refreshAccount(active);
+}
+
+function closePosition(active: Portfolio, tradeId: string): void {
+  const trade = active.getPosition(tradeId);
+  if (!trade) return;
+  const outcome = active.close(
+    tradeId,
+    feed.currentPricePts(trade.currencyPair),
+    Date.now(),
+    feed.gbpQuoteRatePts(trade.currencyPair),
+  );
+  if (!outcome.ok) return; // MVP: close always valid (exit>0, closed>=opened)
+  const posMount = root.querySelector<HTMLElement>('[data-testid="positions-mount"]');
+  if (posMount) posMount.innerHTML = renderPositions(active, feed);
+  const histMount = root.querySelector<HTMLElement>('[data-testid="history-mount"]');
+  if (histMount) histMount.innerHTML = renderHistory(active);
+  refreshAccount(active);
 }
 
 const existing = loadProfile(localStorage);

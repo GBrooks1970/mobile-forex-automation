@@ -18,6 +18,7 @@ function rowHtml(trade: OpenTrade, floatingPence: number): string {
       <td data-testid="position-entry-${trade.tradeId}">${formatPricePts(trade.currencyPair, trade.entryPricePts)}</td>
       <td data-testid="position-price-${trade.tradeId}">${formatPricePts(trade.currencyPair, trade.currentPricePts)}</td>
       <td class="pnl ${pnlClass}" data-testid="position-pnl-${trade.tradeId}">${formatGbpPence(floatingPence)}</td>
+      <td><button type="button" class="close-btn" data-testid="position-close-${trade.tradeId}" data-close="${trade.tradeId}">Close</button></td>
     </tr>`;
 }
 
@@ -25,7 +26,7 @@ export function renderPositions(portfolio: Portfolio, feed: Feed): string {
   const positions = portfolio.openPositions();
   const body =
     positions.length === 0
-      ? `<tr data-testid="positions-empty"><td colspan="6" class="hint">No open positions</td></tr>`
+      ? `<tr data-testid="positions-empty"><td colspan="7" class="hint">No open positions</td></tr>`
       : positions
           .map((t) => rowHtml(t, portfolio.floatingPnlPence(t.tradeId, feed.gbpQuoteRatePts(t.currencyPair))))
           .join('');
@@ -36,7 +37,7 @@ export function renderPositions(portfolio: Portfolio, feed: Feed): string {
       <table class="positions" data-testid="positions">
         <thead><tr>
           <th scope="col">Pair</th><th scope="col">Side</th><th scope="col">Lots</th>
-          <th scope="col">Entry</th><th scope="col">Price</th><th scope="col">P&amp;L</th>
+          <th scope="col">Entry</th><th scope="col">Price</th><th scope="col">P&amp;L</th><th scope="col"></th>
         </tr></thead>
         <tbody>${body}</tbody>
       </table>
