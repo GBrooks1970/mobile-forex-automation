@@ -1,8 +1,9 @@
 import { defineConfig, devices } from '@playwright/test';
 
-// MF-01 scaffold: a single desktop-chromium project proves the wiring.
-// The mobile device-emulation projects (Pixel / iPhone descriptors, touch)
-// are the point of this repo and land with the E2E suite in MF-10/MF-11.
+// The point of this repo: mobile device emulation. Journeys under tests/e2e/mobile/**
+// run on a Pixel 7 (Chromium engine, Android characteristics) AND an iPhone 14
+// (WebKit engine, iOS characteristics) - real mobile viewports with touch input.
+// The rest of tests/e2e/** exercises the app on desktop Chrome.
 export default defineConfig({
   testDir: './tests/e2e',
   fullyParallel: false,
@@ -17,6 +18,17 @@ export default defineConfig({
     {
       name: 'chromium-desktop',
       use: { ...devices['Desktop Chrome'] },
+      testIgnore: '**/mobile/**',
+    },
+    {
+      name: 'mobile-pixel', // Android / Chromium engine, touch
+      use: { ...devices['Pixel 7'] },
+      testMatch: '**/mobile/**',
+    },
+    {
+      name: 'mobile-iphone', // iOS / WebKit engine, touch
+      use: { ...devices['iPhone 14'] },
+      testMatch: '**/mobile/**',
     },
   ],
   webServer: {

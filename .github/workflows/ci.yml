@@ -32,7 +32,9 @@ jobs:
         run: npm ci
 
       - name: Install Playwright browsers
-        run: npx playwright install --with-deps chromium
+        # chromium drives desktop + the Pixel (Android) project; webkit drives
+        # the iPhone (iOS) project. Both are needed for the mobile-emulation suite.
+        run: npx playwright install --with-deps chromium webkit
 
       - name: Verify (typecheck + unit + e2e)
         run: npm run verify
