@@ -52,8 +52,12 @@ tr.tick-down .pair-price { background: #fde3e3; color: #7f1d1d; }
 .order-buttons button { flex: 1; padding: 10px; font-size: 1rem; font-weight: 700; border: 0; border-radius: 6px; color: #fff; cursor: pointer; }
 .order-buttons .buy { background: #14803a; }
 .order-buttons .sell { background: #b3261e; }
-.positions { border-collapse: collapse; width: 100%; }
-.positions th, .positions td { text-align: left; padding: 6px 10px; border-bottom: 1px solid #e1e6ec; font-variant-numeric: tabular-nums; }
+/* table-layout: fixed keeps column widths independent of content, so a
+   position's Close button never shifts as its P&L text width changes each tick
+   (an auto layout would reflow the row and make touch-tap flaky on mobile). */
+.positions { border-collapse: collapse; width: 100%; table-layout: fixed; }
+.positions th, .positions td { text-align: left; padding: 6px 8px; border-bottom: 1px solid #e1e6ec; font-variant-numeric: tabular-nums; overflow: hidden; text-overflow: ellipsis; }
+.positions th:last-child, .positions td:last-child { width: 64px; text-align: right; }
 .positions .pnl.pnl-up { color: #14532d; font-weight: 700; }
 .positions .pnl.pnl-down { color: #7f1d1d; font-weight: 700; }
 .close-btn { padding: 4px 10px; font-size: 0.8rem; border: 1px solid #c8d1da; border-radius: 6px; background: #fff; cursor: pointer; }

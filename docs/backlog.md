@@ -75,8 +75,13 @@ build order; each becomes one branch + PR when actioned.
   + 16 e2e. **Phase 2 complete.**
 
 ### Phase 3 — Mobile E2E suite (the deliverable)
-- **MF-10 — E2E journeys (mobile emulation).** Pixel + iPhone descriptors, touch, seeded feed:
-  login → watchlist → order → close → history.
+- **MF-10 — E2E journeys (mobile emulation).** ✅ **DONE 2026-07-09** (PR #9): Playwright device
+  projects — **Pixel 7 (Chromium/Android)** + **iPhone 14 (WebKit/iOS)**, real mobile viewports with
+  `hasTouch`; `tests/e2e/mobile/**` routed to them (desktop specs `testIgnore` the dir). Full
+  lifecycle by **`tap()`** (touch): login → watchlist → buy → close → history → balance, race-free
+  deterministic; asserts the touch/mobile-viewport context. CI installs chromium+webkit. **Caught +
+  fixed a real mobile flakiness bug:** the Close button jittered each tick (row reflow as P&L text
+  width changed) → `table-layout: fixed`. 90 unit + 22 e2e (14 desktop + 4×2 mobile), flake-free ×4.
 - **MF-11 — E2E responsive breakpoints.** Mobile single-pane vs desktop split assertions.
 - **MF-12 — Optional Screenplay layer for the E2E.** Portfolio-consistent; decide at MF-10 (Open Q2).
 
