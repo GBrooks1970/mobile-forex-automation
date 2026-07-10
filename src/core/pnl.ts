@@ -49,10 +49,11 @@ export function pipDifference(
 /**
  * Gross P&L in QUOTE-currency cents.
  *
- * Derivation (non-JPY): priceDiff × lots × 100,000
+ * Derivation (non-JPY, point = 1e-5): priceDiff × lots × 100,000
  *   = (diffPts × 1e-5) × (lots2 / 100) × 1e5 quote units
  *   = diffPts × lots2 × 0.01 quote units  = diffPts × lots2 quote CENTS — exact.
- * JPY quotes (3-decimal points, 2-decimal cash): diffPts × lots2 × 10 sen — exact.
+ * JPY quotes (point = 1e-3): (diffPts × 1e-3) × (lots2/100) × 1e5 = diffPts × lots2
+ *   YEN = diffPts × lots2 × 100 sen — exact. (Matches the swap branch's ×100.)
  */
 export function grossPnlQuoteCents(
   pair: string,
@@ -62,7 +63,7 @@ export function grossPnlQuoteCents(
   exitPricePts: number,
 ): number {
   const diffPts = directionalDiffPts(direction, entryPricePts, exitPricePts);
-  const perCent = isJpyQuoted(pair) ? 10 : 1;
+  const perCent = isJpyQuoted(pair) ? 100 : 1;
   return diffPts * volumeLots2 * perCent;
 }
 
