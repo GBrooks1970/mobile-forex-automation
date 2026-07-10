@@ -16,6 +16,7 @@ import { applyTicks, renderWatchlist } from './ui/watchlist.js';
 import { parseLots2, renderOrderPanel } from './ui/orderPanel.js';
 import { renderPositions, updatePositions } from './ui/positions.js';
 import { renderHistory } from './ui/history.js';
+import { layoutFor } from './ui/layout.js';
 
 // App orchestration (MF-04/05/06): login screen <-> trading shell.
 // The close/history and responsive slices land in MF-07..MF-08.
@@ -28,10 +29,17 @@ const root: HTMLElement = app;
 const feed = createFeed(parseSeed(new URLSearchParams(location.search).get('seed')));
 let ticker: TickerHandle | null = null;
 let portfolio: Portfolio | null = null;
+let detachResize: (() => void) | null = null;
 
 function stopTicker(): void {
   ticker?.stop();
   ticker = null;
+}
+
+/** Reflect the active breakpoint onto the workspace (mirrors the CSS grid). */
+function applyLayout(): void {
+  const ws = root.querySelector<HTMLElement>('[data-testid="workspace"]');
+  if (ws) ws.dataset['layout'] = layoutFor(window.innerWidth);
 }
 
 const rateFor = (pair: CurrencyPair): number | null => feed.gbpQuoteRatePts(pair);
@@ -100,15 +108,23 @@ function renderShell(profile: Profile): void {
       </div>
     </header>
     <div data-testid="trading-shell" data-seed="${feed.seed}">
-      ${renderWatchlist(feed)}
-      ${renderOrderPanel()}
-      <div data-testid="positions-mount">${renderPositions(active, feed)}</div>
-      <div data-testid="history-mount">${renderHistory(active)}</div>
-      <section class="pane">
-        <p class="hint">Responsive layout arrives in MF-08.</p>
-      </section>
+      <div class="workspace" data-testid="workspace">
+        <div class="col-watch" data-testid="col-watch">
+          ${renderWatchlist(feed)}
+        </div>
+        <div class="col-main" data-testid="col-main">
+          ${renderOrderPanel()}
+          <div data-testid="positions-mount">${renderPositions(active, feed)}</div>
+          <div data-testid="history-mount">${renderHistory(active)}</div>
+        </div>
+      </div>
     </div>
   `;
+
+  applyLayout();
+  const onResize = (): void => applyLayout();
+  window.addEventListener('resize', onResize);
+  detachResize = () => window.removeEventListener('resize', onResize);
 
   const orderForm = root.querySelector<HTMLFormElement>('[data-testid="order-form"]');
   orderForm?.addEventListener('submit', (event) => {
@@ -134,6 +150,8 @@ function renderShell(profile: Profile): void {
     .querySelector<HTMLButtonElement>('[data-testid="sign-out"]')
     ?.addEventListener('click', () => {
       stopTicker();
+      detachResize?.();
+      detachResize = null;
       portfolio = null;
       clearProfile(localStorage);
       renderLogin();

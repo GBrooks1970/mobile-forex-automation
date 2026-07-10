@@ -18,8 +18,9 @@ body {
 .app-header h1 { margin: 0; font-size: 1.4rem; }
 .tagline { margin: 4px 0 0; color: #5a6672; font-size: 0.85rem; }
 
-/* MF-04: login + shell chrome. The responsive layout system lands in MF-08. */
-.pane { padding: 20px; max-width: 480px; }
+/* MF-04: login + shell chrome. */
+.pane { padding: 20px; }
+.login-pane { max-width: 480px; }
 .login-pane label { display: block; margin: 0 0 12px; font-size: 0.9rem; }
 .login-pane input {
   display: block; width: 100%; margin-top: 4px; padding: 8px 10px;
@@ -63,3 +64,13 @@ tr.tick-down .pair-price { background: #fde3e3; color: #7f1d1d; }
 .history th, .history td { text-align: left; padding: 6px 10px; border-bottom: 1px solid #e1e6ec; font-variant-numeric: tabular-nums; }
 .history .pnl.pnl-up { color: #14532d; font-weight: 700; }
 .history .pnl.pnl-down { color: #7f1d1d; font-weight: 700; }
+
+/* MF-08: responsive/adaptive workspace (PRS §2.2 breakpoints).
+   Mobile (< 600): single column, panes stack.
+   Tablet (600-1024): comfortable single column, wider panes.
+   Desktop (> 1024): split workspace - watchlist sidebar | main dock. */
+.workspace { display: grid; grid-template-columns: 1fr; gap: 12px; align-items: start; padding: 12px; }
+.col-watch, .col-main { min-width: 0; display: flex; flex-direction: column; gap: 12px; }
+@media (min-width: 1025px) {
+  .workspace { grid-template-columns: minmax(260px, 1fr) 2fr; gap: 20px; }
+}
