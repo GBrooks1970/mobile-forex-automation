@@ -82,7 +82,11 @@ build order; each becomes one branch + PR when actioned.
   deterministic; asserts the touch/mobile-viewport context. CI installs chromium+webkit. **Caught +
   fixed a real mobile flakiness bug:** the Close button jittered each tick (row reflow as P&L text
   width changed) → `table-layout: fixed`. 90 unit + 22 e2e (14 desktop + 4×2 mobile), flake-free ×4.
-- **MF-11 — E2E responsive breakpoints.** Mobile single-pane vs desktop split assertions.
+- **MF-11 — E2E responsive breakpoints (on device).** ✅ **DONE 2026-07-09** (PR #10): responsive
+  layout verified on the **real** Pixel/iPhone device viewports (not a resized desktop) — portrait
+  sub-600 viewport selects the mobile layout; panes stack single-pane (geometry); **no horizontal
+  overflow** with a position on screen (mobile hygiene). Desktop-split half stays in
+  `responsive.spec.ts`. 90 unit + 28 e2e. **Phase 3 core E2E complete** (MF-12 Screenplay optional).
 - **MF-12 — Optional Screenplay layer for the E2E.** Portfolio-consistent; decide at MF-10 (Open Q2).
 
 ### Phase 4 — Ship
