@@ -66,8 +66,13 @@ build order; each becomes one branch + PR when actioned.
   desktop side-by-side) + live reflow across breakpoints. **Phase 1 COMPLETE.** 66 unit + 16 e2e.
 
 ### Phase 2 — Unit / logic tests (the cheap oracle)
-- **MF-09 — Unit suite vs the PRS.** Worked example (62.0 pips / +£246.78), commission, triple-Wednesday
-  swap, and ISTQB boundary cases for the validation rules.
+- **MF-09 — Unit boundary sweep.** ✅ **DONE 2026-07-09** (PR #8): ISTQB boundary-value +
+  equivalence-partition sweep over the pure core (quote-cents identity, JPY conventions, half-away
+  rounding both signs, commission scaling, swap accumulation/triple-Wednesday/JPY branch, and
+  parametrised validation tables for volume / SL-TP-on-entry / timestamp / exit-price). **Caught a
+  real bug:** `grossPnlQuoteCents` used a ×10 JPY factor instead of ×100 (inconsistent with the swap
+  branch) — off by 10× for USD/JPY P&L, a pair the app trades; fixed in `src/core/pnl.ts`. 90 unit
+  + 16 e2e. **Phase 2 complete.**
 
 ### Phase 3 — Mobile E2E suite (the deliverable)
 - **MF-10 — E2E journeys (mobile emulation).** Pixel + iPhone descriptors, touch, seeded feed:
