@@ -7,6 +7,10 @@ uses [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ## [Unreleased]
 
+### Added
+
+- Added a GitHub Pages build/deployment workflow and repository-subpath-safe Vite configuration.
+
 ### Changed
 
 - Published the repository for portfolio review.
