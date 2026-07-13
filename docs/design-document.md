@@ -1,12 +1,12 @@
 # Mobile Forex Automation — Design Document
 
-**Version:** v0.2
+**Version:** v0.3
 **Date:** 2026-07-08T00:00:00Z
-**Last Updated:** 2026-07-13
+**Last Updated:** 2026-07-14
 **Author:** Gary Brooks (with Claude Fable 5)
 **Reviewer:** Gary Brooks (approved as-is, 2026-07-08)
-**Status:** Approved — MF-01…MF-12 complete; Phase 4 shipping in progress. Q1–Q3 are resolved
-(Vite + vanilla TS; Screenplay layer delivered at MF-12; repo name `mobile-forex-automation`).
+**Status:** Approved — MF-01…MF-13 complete; Phase 4 onboarding remains. Q1–Q3 are resolved:
+Vite + vanilla TS; Screenplay layer delivered at MF-12; repo name `mobile-forex-automation`.
 
 > Adapted from `templates/design-document.template.md`; sections that do not apply to a greenfield
 > test-automation project are marked `N/A — <reason>` per the template's own rule.
@@ -57,8 +57,9 @@ SUT exists only to be tested.
   / +£246.78 gross**) to the penny, plus commission/swap cases.
 - [x] A Playwright mobile-emulation E2E suite (Pixel + iPhone descriptors) covers login → watchlist →
   order → close → history and the responsive breakpoints, green locally and in CI.
-- [ ] The project is CI-gated, has a live demo, a v1 handover, and a registry row (fan-outs → 8
-  targets). CI is complete; Pages, handover, and onboarding remain MF-13/MF-14.
+- [x] The project is CI-gated and has a verified
+  [live demo](https://gbrooks1970.github.io/mobile-forex-automation/).
+- [ ] The project has a v1 handover and registry row (fan-outs → 8 targets); these remain MF-14.
 
 ---
 
@@ -229,7 +230,7 @@ is one branch + PR, `/loop`-driven like the hand-baked cycle. Seeded as `docs/ba
 - **MF-10** E2E: login/watchlist/order/close journeys (mobile emulation) *(Phase 3)*
 - **MF-11** E2E: responsive breakpoints (Pixel/iPhone/desktop) *(Phase 3)*
 - **MF-12** Screenplay layer for the business-facing mobile E2E *(Phase 3; complete)*
-- **MF-13** CI gate + Pages demo *(Phase 4)*
+- **MF-13** CI gate + Pages demo *(Phase 4; complete)*
 - **MF-14** Handover v1 + registry row + landing-page card *(Phase 4)*
 
 ### Risk Mitigation
@@ -289,3 +290,4 @@ financing; *SUT* — system under test. **References:** the forex PRS
 | v0.1 | 2026-07-08 | Gary Brooks + Claude Fable 5 | Initial draft for review (Phase 0) |
 | v0.1 (approved) | 2026-07-08 | Gary Brooks | Approved as-is; Q1–Q3 resolved to proposed defaults; Phase 1 authorised |
 | v0.2 | 2026-07-13 | Gary Brooks + Codex | Reconciled implementation status after MF-12; traceability complete; Phase 4 remains |
+| v0.3 | 2026-07-14 | Gary Brooks + Codex | Recorded verified Pages deployment; MF-13 complete; MF-14 remains |

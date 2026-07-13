@@ -6,14 +6,14 @@
 
 # Mobile Forex Automation — Backlog
 
-**Version:** 2 — MF-01…MF-12 complete; Phase 4 shipping remains
-**Last Updated:** 2026-07-13
-**Based on:** `docs/design-document.md` v0.2 and the Mobile Forex Trading App PRS in
+**Version:** 3 — MF-01…MF-13 complete; MF-14 onboarding remains
+**Last Updated:** 2026-07-14
+**Based on:** `docs/design-document.md` v0.3 and the Mobile Forex Trading App PRS in
 `project-specs/`. Approach fixed by `docs/adr/ADR-0001-approach.md` (web + Playwright emulation).
 
 This backlog is the project's **source of truth** for item status. The vertical slice + automation
-are broken into MF-01…MF-14, ordered by phase (build the SUT → automate → ship). MF-01…MF-12 are
-complete; MF-13 and MF-14 are the remaining ship/onboarding work.
+are broken into MF-01…MF-14, ordered by phase (build the SUT → automate → ship). MF-01…MF-13 are
+complete; MF-14 is the remaining onboarding/handover work.
 
 **Priority Scoring System:**
 - **Score = Value (0–10) + Breakage/Blocking (0–10) + Effort-inverse/Enablement (0–10)**
@@ -23,8 +23,8 @@ complete; MF-13 and MF-14 are the remaining ship/onboarding work.
 
 ## Outstanding Work (roadmap)
 
-The build and automation phases are complete. The items below retain the delivery history and the
-two remaining Phase 4 outcomes.
+The build, automation, CI, and public-demo outcomes are complete. The items below retain delivery
+history and the one remaining Phase 4 onboarding outcome.
 
 ### Phase 1 — Build the SUT (minimal vertical slice)
 - **MF-01 — Scaffold: Vite + TypeScript + CI skeleton.** ✅ **DONE 2026-07-08** (PR #1): app shell
@@ -99,11 +99,12 @@ two remaining Phase 4 outcomes.
   work. 90 unit + 28 e2e. **Phase 3 complete.**
 
 ### Phase 4 — Ship
-- **MF-13 — CI gate + Pages demo.** 🟡 **IN PROGRESS:** CI is implemented and green on `main`
-  (Node 24; strict typecheck + 90 unit + 28 E2E executions). The Pages delivery increment defines
-  a repository-subpath-safe Vite build and a least-privilege build/deploy workflow. Closure gate:
-  merge it to `main`, smoke-test the first public deployment, and record the verified URL in the
-  README and repository homepage.
+- **MF-13 — CI gate + Pages demo.** ✅ **DONE 2026-07-14** (PR #13): Node 24 CI remains green
+  (strict typecheck + 90 unit + 28 E2E executions); Vite derives the project Pages base path; a
+  least-privilege workflow validates artifacts on PRs and deploys only from `main`. The first Pages
+  deployment succeeded and the public [live demo](https://gbrooks1970.github.io/mobile-forex-automation/)
+  passed an HTTP 200 + login → order → price move → close → history → balance smoke journey with
+  zero console/page errors.
 - **MF-14 — Handover v1 + registry row + landing-page card.** ⬜ **OPEN:** onboard to the registry
   (`orchestration_target: true`, making eight fan-out targets), write the first handover, and add the
   live-demo card to `portfolio-landing/`.
@@ -113,8 +114,8 @@ two remaining Phase 4 outcomes.
 ## Risk Summary
 | Priority | Count | Status |
 |---|---|---|
-| **Total Outstanding** | 2 (MF-13, MF-14) | 1 in progress, 1 open |
-| Resolved | 12 (MF-01…MF-12) | Build + automation phases complete |
+| **Total Outstanding** | 1 (MF-14) | 1 open |
+| Resolved | 13 (MF-01…MF-13) | Build + automation + public demo complete |
 
 ---
 
