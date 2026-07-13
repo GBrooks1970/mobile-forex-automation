@@ -1,11 +1,12 @@
 # Mobile Forex Automation — Design Document
 
-**Version:** v0.1
+**Version:** v0.2
 **Date:** 2026-07-08T00:00:00Z
+**Last Updated:** 2026-07-13
 **Author:** Gary Brooks (with Claude Fable 5)
 **Reviewer:** Gary Brooks (approved as-is, 2026-07-08)
-**Status:** Approved — Phase 1 authorised; open questions Q1–Q3 resolved to their proposed defaults
-(Vite + vanilla TS; Screenplay layer at MF-10; repo name `mobile-forex-automation`)
+**Status:** Approved — MF-01…MF-12 complete; Phase 4 shipping in progress. Q1–Q3 are resolved
+(Vite + vanilla TS; Screenplay layer delivered at MF-12; repo name `mobile-forex-automation`).
 
 > Adapted from `templates/design-document.template.md`; sections that do not apply to a greenfield
 > test-automation project are marked `N/A — <reason>` per the template's own rule.
@@ -47,15 +48,17 @@ SUT exists only to be tested.
 2. **Deterministic seeded mock feed** — a `?seed=` test mode makes every tick reproducible; no live data.
 3. **Money as integer micro-units**, never floats (PRS §"no floating-point for money").
 4. **Pure P&L/validation core** decoupled from UI, unit-tested against the PRS's worked examples.
-5. **Screenplay layer for the E2E** (consistency with the portfolio's identity) — provisional, see Open Q2.
+5. **Screenplay layer for the mobile E2E**, delivered at MF-12; geometry-heavy breakpoint checks
+   remain plain Playwright by design.
 
 ### Success Criteria
-- The MVP slice runs deterministically in a headless browser with a seeded feed.
-- The P&L engine reproduces the PRS worked example (GBP/USD, 0.5 lots, 1.25000→1.25620 = **62.0 pips
+- [x] The MVP slice runs deterministically in a headless browser with a seeded feed.
+- [x] The P&L engine reproduces the PRS worked example (GBP/USD, 0.5 lots, 1.25000→1.25620 = **62.0 pips
   / +£246.78 gross**) to the penny, plus commission/swap cases.
-- A Playwright mobile-emulation E2E suite (Pixel + iPhone descriptors) covers login → watchlist →
+- [x] A Playwright mobile-emulation E2E suite (Pixel + iPhone descriptors) covers login → watchlist →
   order → close → history and the responsive breakpoints, green locally and in CI.
-- The project is CI-gated, has a live demo, a v1 handover, and a registry row (fan-outs → 8 targets).
+- [ ] The project is CI-gated, has a live demo, a v1 handover, and a registry row (fan-outs → 8
+  targets). CI is complete; Pages, handover, and onboarding remain MF-13/MF-14.
 
 ---
 
@@ -122,12 +125,15 @@ and swap (incl. triple-Wednesday) match the PRS formulas; validation rules enfor
 - **NFR-4 Maintainability.** Pure core (P&L/validation) with high unit coverage; UI thin over it.
 - **NFR-5 Accessibility-ready.** Semantic markup so an axe pass is a cheap future extension.
 
-### Requirements Traceability Matrix (seed — filled as items land)
+### Requirements Traceability Matrix
 | Req | Design component | Test case(s) | Status |
 |---|---|---|---|
-| FR-1 | Auth module | E2E login; unit profile-gen | Not started |
-| FR-6 | P&L/validation core | Unit: PRS oracle + boundaries | Not started |
-| FR-5 | Responsive layout | E2E breakpoint (Pixel/iPhone/desktop) | Not started |
+| FR-1 | Auth/session | `login.spec.ts`; `session.spec.ts` | Complete |
+| FR-2 | Seeded feed + watchlist/ticker | `watchlist.spec.ts`; `feed.spec.ts`; `ticker.spec.ts` | Complete |
+| FR-3 | Order panel + portfolio | `order.spec.ts`; `portfolio.spec.ts` | Complete |
+| FR-4 | Close/history/P&L | `close.spec.ts`; `portfolio-close.spec.ts`; `pnl.spec.ts` | Complete |
+| FR-5 | Responsive layout | `responsive.spec.ts`; Pixel/iPhone mobile breakpoint specs | Complete |
+| FR-6 | P&L/validation core | PRS oracle, validation, and boundary unit suites | Complete |
 
 ---
 
@@ -222,7 +228,7 @@ is one branch + PR, `/loop`-driven like the hand-baked cycle. Seeded as `docs/ba
 - **MF-09** Unit suite vs PRS oracle + boundaries *(Phase 2)*
 - **MF-10** E2E: login/watchlist/order/close journeys (mobile emulation) *(Phase 3)*
 - **MF-11** E2E: responsive breakpoints (Pixel/iPhone/desktop) *(Phase 3)*
-- **MF-12** Optional Screenplay layer for the E2E *(Phase 3, see Open Q2)*
+- **MF-12** Screenplay layer for the business-facing mobile E2E *(Phase 3; complete)*
 - **MF-13** CI gate + Pages demo *(Phase 4)*
 - **MF-14** Handover v1 + registry row + landing-page card *(Phase 4)*
 
@@ -243,8 +249,8 @@ N/A — greenfield project, nothing to refactor.
 - **Unit (Vitest):** the P&L/validation core. Oracle = the PRS worked example (62.0 pips / +£246.78),
   the commission example (£2.50 total on 0.5 lots @ £2.50/side), triple-Wednesday swap weighting, and
   ISTQB-style boundaries (volume 0/negative; SL/TP ordering; `closed_at` == `opened_at`).
-- **E2E (Playwright device emulation):** Pixel 7 + iPhone descriptors, `hasTouch`, seeded SUT. Journeys
-  FR-1→FR-4; responsive assertions FR-5. Optional Screenplay layer (MF-12).
+- **E2E (Playwright device emulation):** Pixel 7 + iPhone descriptors, `hasTouch`, seeded SUT.
+  Screenplay journeys cover FR-1→FR-4; plain Playwright geometry assertions cover FR-5.
 - **CI:** GitHub Actions, Node 24, Playwright browsers; unit + E2E gate on PR and push to main.
 - **Non-functional (future-cheap):** semantic markup leaves an axe-core accessibility pass and
   Playwright visual baselines as low-effort follow-ons (portfolio gaps B-4/B-5).
@@ -262,13 +268,12 @@ N/A — new project.
 
 Decision recorded in **ADR-0001**; "A now, native later" per the user (2026-07-08).
 
-## 11. Open Questions
-- **Q1 (design):** SUT web stack — Vite + vanilla TS (lightest) vs a small framework? *Proposed:*
-  Vite + vanilla TS, to keep the core framework-free and the focus on testing. **Blocking Phase 1? No** —
-  default stands unless overridden.
-- **Q2 (test design):** Screenplay layer for the E2E (portfolio-consistent) vs plain Playwright POM?
-  *Proposed:* Screenplay, for identity; costs a little more. **Non-blocking** — decide at MF-10.
-- **Q3 (naming):** repo/registry name `mobile-forex-automation`. *Proposed:* yes. **Non-blocking.**
+## 11. Resolved Design Questions
+- **Q1 (design):** resolved to Vite + vanilla TypeScript, keeping the SUT small and the core
+  framework-free.
+- **Q2 (test design):** resolved to a framework-free Screenplay layer for business journeys at
+  MF-12; breakpoint geometry remains plain Playwright.
+- **Q3 (naming):** resolved to `mobile-forex-automation`.
 
 ## 12. Appendices
 **Glossary:** *pip* — 4th decimal (2nd for JPY); *lot* — 100,000 base units; *swap* — overnight
@@ -283,3 +288,4 @@ financing; *SUT* — system under test. **References:** the forex PRS
 |---|---|---|---|
 | v0.1 | 2026-07-08 | Gary Brooks + Claude Fable 5 | Initial draft for review (Phase 0) |
 | v0.1 (approved) | 2026-07-08 | Gary Brooks | Approved as-is; Q1–Q3 resolved to proposed defaults; Phase 1 authorised |
+| v0.2 | 2026-07-13 | Gary Brooks + Codex | Reconciled implementation status after MF-12; traceability complete; Phase 4 remains |
