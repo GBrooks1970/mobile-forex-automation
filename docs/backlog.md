@@ -100,9 +100,10 @@ two remaining Phase 4 outcomes.
 
 ### Phase 4 — Ship
 - **MF-13 — CI gate + Pages demo.** 🟡 **IN PROGRESS:** CI is implemented and green on `main`
-  (Node 24; strict typecheck + 90 unit + 28 E2E executions). Remaining: configure the Vite asset
-  base, deploy the built SUT to GitHub Pages, smoke-test the public URL, and record it in the README
-  and repository homepage.
+  (Node 24; strict typecheck + 90 unit + 28 E2E executions). The Pages delivery increment defines
+  a repository-subpath-safe Vite build and a least-privilege build/deploy workflow. Closure gate:
+  merge it to `main`, smoke-test the first public deployment, and record the verified URL in the
+  README and repository homepage.
 - **MF-14 — Handover v1 + registry row + landing-page card.** ⬜ **OPEN:** onboard to the registry
   (`orchestration_target: true`, making eight fan-out targets), write the first handover, and add the
   live-demo card to `portfolio-landing/`.
