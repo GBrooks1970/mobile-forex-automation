@@ -15,13 +15,16 @@ this project delivers **two** things:
 
 The automation is the deliverable; the SUT exists only to be tested.
 
+**[Launch the live demo](https://gbrooks1970.github.io/mobile-forex-automation/)** — any
+well-formed email and password opens a £10,000 demo profile. No real money or live market data is
+used.
+
 ## Status
 
-**Phase 4 — shipping.** MF-01…MF-12 are merged: the responsive SUT, deterministic domain core,
-desktop/mobile E2E, real Pixel/iPhone breakpoint checks, and Screenplay journeys are complete.
-The current gate is green with **90 unit tests + 28 Playwright executions**. Remaining work is
-MF-13 (Pages deployment; CI is already complete) and MF-14 (portfolio onboarding, handover, and
-landing-page card). See
+**Phase 4 — shipping.** MF-01…MF-13 are merged: the responsive SUT, deterministic domain core,
+desktop/mobile E2E, real Pixel/iPhone breakpoint checks, Screenplay journeys, CI gate, and verified
+Pages deployment are complete. The current gate is green with **90 unit tests + 28 Playwright
+executions**. Remaining work is MF-14 (portfolio onboarding, handover, and landing-page card). See
 [`docs/design-document.md`](docs/design-document.md),
 [`docs/adr/ADR-0001-approach.md`](docs/adr/ADR-0001-approach.md) (approach: web + Playwright
 emulation, "A now, native later"), and [`docs/backlog.md`](docs/backlog.md) (roadmap MF-01…MF-14).
@@ -43,6 +46,8 @@ optional later **Phase B** (ADR-0001).
   breakpoint and overflow assertions.
 - **CI:** `npm run verify` on every PR and push to `main`, with Playwright reports retained on
   failure.
+- **Deployment:** the Vite production artifact is published from `main` by GitHub Pages and the
+  public login → order → price move → close → history → balance journey has been smoke-tested.
 
 ## Commands
 

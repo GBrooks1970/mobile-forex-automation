@@ -10,11 +10,13 @@ uses [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 ### Added
 
 - Added a GitHub Pages build/deployment workflow and repository-subpath-safe Vite configuration.
+- Added the verified public demo at <https://gbrooks1970.github.io/mobile-forex-automation/>.
 
 ### Changed
 
 - Published the repository for portfolio review.
 - Reconciled project status and traceability after completion of MF-12.
+- Closed MF-13 after the first `main` deployment and public trading-journey smoke test passed.
 
 ## [0.1.0] — 2026-07-13
 
