@@ -6,14 +6,15 @@
 
 # Mobile Forex Automation — Backlog
 
-**Version:** 3 — MF-01…MF-13 complete; MF-14 onboarding remains
+**Version:** 4 — MF-01…MF-13 complete; MF-14 onboarding underway
 **Last Updated:** 2026-07-14
 **Based on:** `docs/design-document.md` v0.3 and the Mobile Forex Trading App PRS in
 `project-specs/`. Approach fixed by `docs/adr/ADR-0001-approach.md` (web + Playwright emulation).
 
 This backlog is the project's **source of truth** for item status. The vertical slice + automation
 are broken into MF-01…MF-14, ordered by phase (build the SUT → automate → ship). MF-01…MF-13 are
-complete; MF-14 is the remaining onboarding/handover work.
+complete; MF-14 is underway: registry onboarding is complete, while the first handover and landing
+card remain.
 
 **Priority Scoring System:**
 - **Score = Value (0–10) + Breakage/Blocking (0–10) + Effort-inverse/Enablement (0–10)**
@@ -24,7 +25,7 @@ complete; MF-14 is the remaining onboarding/handover work.
 ## Outstanding Work (roadmap)
 
 The build, automation, CI, and public-demo outcomes are complete. The items below retain delivery
-history and the one remaining Phase 4 onboarding outcome.
+history and the one remaining Phase 4 onboarding outcome, now in progress.
 
 ### Phase 1 — Build the SUT (minimal vertical slice)
 - **MF-01 — Scaffold: Vite + TypeScript + CI skeleton.** ✅ **DONE 2026-07-08** (PR #1): app shell
@@ -105,16 +106,17 @@ history and the one remaining Phase 4 onboarding outcome.
   deployment succeeded and the public [live demo](https://gbrooks1970.github.io/mobile-forex-automation/)
   passed an HTTP 200 + login → order → price move → close → history → balance smoke journey with
   zero console/page errors.
-- **MF-14 — Handover v1 + registry row + landing-page card.** ⬜ **OPEN:** onboard to the registry
-  (`orchestration_target: true`, making eight fan-out targets), write the first handover, and add the
-  live-demo card to `portfolio-landing/`.
+- **MF-14 — Handover v1 + registry row + landing-page card.** 🟨 **IN PROGRESS:** registry onboarding
+  completed on 2026-07-14 in `portfolio-prompts` PR #32
+  (`orchestration_target: true`, making eight fan-out targets). Remaining, in merge-gated order:
+  write the first handover, then add the live-demo card to `portfolio-landing/`.
 
 ---
 
 ## Risk Summary
 | Priority | Count | Status |
 |---|---|---|
-| **Total Outstanding** | 1 (MF-14) | 1 open |
+| **Total Outstanding** | 1 (MF-14) | In progress — registry complete; 2 artefacts remain |
 | Resolved | 13 (MF-01…MF-13) | Build + automation + public demo complete |
 
 ---
