@@ -1,33 +1,35 @@
-import { expect, test, type Page } from '@playwright/test';
+import { expect, test } from '@playwright/test';
 import { commissionPence, grossPnlGbpPence } from '../../../src/core/pnl.js';
+import { Actor } from '../../screenplay/core.js';
+import { BrowseTheWeb } from '../../screenplay/abilities/BrowseTheWeb.js';
+import { ClosePosition, Login, PlaceMarketOrder, WaitUntilPriceMoves } from '../../screenplay/tasks.js';
+import {
+  TheAccountBalance,
+  TheOpenPositionId,
+  TheRecordedNetPnl,
+  TheRecordedPrices,
+  TheWorkspaceLayout,
+} from '../../screenplay/questions.js';
 
-// MF-10 (the deliverable): the full trade lifecycle driven on REAL mobile
-// device emulation - Pixel 7 (Chromium/Android) and iPhone 14 (WebKit/iOS),
-// each a mobile viewport with hasTouch. Interactions use tap() (touch), not
-// mouse click, and the seeded feed keeps every assertion deterministic.
+// MF-10/MF-12 (the deliverable): the full trade lifecycle on REAL mobile device
+// emulation — Pixel 7 (Chromium/Android) and iPhone 14 (WebKit/iOS), touch
+// throughout — expressed in the portfolio's Screenplay style: an actor who,
+// able to browse the web, attempts tasks and asks questions. The seeded feed
+// keeps every assertion deterministic (exact values, no tolerance).
 
 const SEED = 771;
 
-const toPts = (s: string): number => Math.round(parseFloat(s) * 100_000);
 const gbp = (pence: number): string =>
   `${pence < 0 ? '-' : ''}£${(Math.abs(pence) / 100).toLocaleString('en-GB', {
     minimumFractionDigits: 2,
     maximumFractionDigits: 2,
   })}`;
 
-async function tapLogin(page: Page): Promise<void> {
-  await page.goto(`/?seed=${SEED}`);
-  await page.getByTestId('login-email').fill('ada@example.com');
-  await page.getByTestId('login-password').fill('pw');
-  await page.getByTestId('login-submit').tap(); // touch, not click
-  await expect(page.getByTestId('trading-shell')).toBeVisible();
-}
-
 test('the device context is a touch-capable mobile viewport', async ({ page }) => {
-  await tapLogin(page);
+  const ada = Actor.named('Ada').whoCan(BrowseTheWeb.using(page));
+  await ada.attemptsTo(Login.toFreshDemoProfile({ seed: SEED }));
 
-  // The layout resolves to mobile because the device viewport is < 600px wide.
-  await expect(page.getByTestId('workspace')).toHaveAttribute('data-layout', 'mobile');
+  expect(await ada.asks(TheWorkspaceLayout.current())).toBe('mobile');
 
   const info = await page.evaluate(() => ({
     touch: 'ontouchstart' in window || navigator.maxTouchPoints > 0,
@@ -40,36 +42,27 @@ test('the device context is a touch-capable mobile viewport', async ({ page }) =
 test('full lifecycle by touch: login -> watchlist -> buy -> close -> history -> balance', async ({
   page,
 }) => {
-  await tapLogin(page);
-  await expect(page.getByTestId('account-balance')).toHaveText('£10,000.00');
+  const ada = Actor.named('Ada').whoCan(BrowseTheWeb.using(page));
 
-  // Watchlist is present and ticking on the device.
+  await ada.attemptsTo(Login.toFreshDemoProfile({ seed: SEED }));
+  expect(await ada.asks(TheAccountBalance.displayed())).toBe('£10,000.00');
   await expect(page.getByTestId('watch-row-GBP/USD')).toBeVisible();
 
-  // Place a BUY by touch.
-  await page.getByTestId('order-pair').selectOption('GBP/USD');
-  await page.getByTestId('order-volume').fill('0.10'); // lots2 = 10
-  await page.getByTestId('order-buy').tap();
+  await ada.attemptsTo(PlaceMarketOrder.buy('GBP/USD', '0.10')); // lots2 = 10
+  const tradeId = await ada.asks(TheOpenPositionId.ofTheOnlyPosition());
 
-  const tradeId = await page
-    .locator('[data-testid^="position-"][data-trade-id]')
-    .getAttribute('data-trade-id');
-  await expect(page.getByTestId(`position-${tradeId}`)).toBeVisible();
+  await ada.attemptsTo(
+    WaitUntilPriceMoves.forPosition(tradeId),
+    ClosePosition.withId(tradeId),
+  );
 
-  // Let the price move, then close by touch.
-  const priceCell = page.getByTestId(`position-price-${tradeId}`);
-  const start = await priceCell.textContent();
-  await expect.poll(async () => priceCell.textContent(), { timeout: 15_000 }).not.toBe(start);
-  await page.getByTestId(`position-close-${tradeId}`).tap();
-
-  // Race-free: predict net + new balance from the app-recorded entry/exit.
-  await expect(page.getByTestId('positions-empty')).toBeVisible();
-  const entryPts = toPts((await page.getByTestId(`history-entry-${tradeId}`).textContent()) ?? '');
-  const exitPts = toPts((await page.getByTestId(`history-exit-${tradeId}`).textContent()) ?? '');
+  // Race-free determinism: predict net + new balance from the entry/exit the
+  // APP RECORDED in the history row, via the same core the app uses.
+  const { entryPts, exitPts } = await ada.asks(TheRecordedPrices.ofClosedTrade(tradeId));
   const net = grossPnlGbpPence('GBP/USD', 'BUY', 10, entryPts, exitPts, exitPts) - commissionPence(10);
 
-  await expect(page.getByTestId(`history-pnl-${tradeId}`)).toHaveText(gbp(net));
-  await expect(page.getByTestId('account-balance')).toHaveText(gbp(1_000_000 + net));
+  expect(await ada.asks(TheRecordedNetPnl.ofClosedTrade(tradeId))).toBe(gbp(net));
+  expect(await ada.asks(TheAccountBalance.displayed())).toBe(gbp(1_000_000 + net));
 });
 
 test('a tap on a malformed login is rejected on the device', async ({ page }) => {

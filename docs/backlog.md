@@ -87,7 +87,15 @@ build order; each becomes one branch + PR when actioned.
   sub-600 viewport selects the mobile layout; panes stack single-pane (geometry); **no horizontal
   overflow** with a position on screen (mobile hygiene). Desktop-split half stays in
   `responsive.spec.ts`. 90 unit + 28 e2e. **Phase 3 core E2E complete** (MF-12 Screenplay optional).
-- **MF-12 — Optional Screenplay layer for the E2E.** Portfolio-consistent; decide at MF-10 (Open Q2).
+- **MF-12 — Screenplay layer for the mobile E2E.** ✅ **DONE 2026-07-09** (PR #11; design Q2
+  resolved = yes, user-confirmed): hand-rolled, framework-free layer in the portfolio's house style
+  under `tests/screenplay/` — `Actor.named('Ada').whoCan(BrowseTheWeb.using(page))` attempts
+  touch-first Tasks (`Login`, `PlaceMarketOrder`, `WaitUntilPriceMoves`, `ClosePosition`) and asks
+  Questions (`TheAccountBalance`, `TheOpenPositionId`, `TheRecordedPrices/NetPnl`,
+  `TheWorkspaceLayout`). Mobile journeys spec rewritten in Screenplay form with **identical
+  deterministic assertions**; breakpoints spec stays plain (geometry-heavy, no business language).
+  Lesson: ability lookup typed structurally (`prototype`+`name`) so private-constructor classes
+  work. 90 unit + 28 e2e. **Phase 3 complete.**
 
 ### Phase 4 — Ship
 - **MF-13 — CI gate + Pages demo.** Unit + E2E green in CI; deploy the SUT to Pages as a live demo.
