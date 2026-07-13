@@ -6,14 +6,14 @@
 
 # Mobile Forex Automation — Backlog
 
-**Version:** 1 — initial roadmap (Phase 0 scaffold; project not yet implemented)
-**Last Updated:** 2026-07-08
-**Based on:** `docs/design-document.md` v0.1 and the Mobile Forex Trading App PRS in
+**Version:** 2 — MF-01…MF-12 complete; Phase 4 shipping remains
+**Last Updated:** 2026-07-13
+**Based on:** `docs/design-document.md` v0.2 and the Mobile Forex Trading App PRS in
 `project-specs/`. Approach fixed by `docs/adr/ADR-0001-approach.md` (web + Playwright emulation).
 
 This backlog is the project's **source of truth** for item status. The vertical slice + automation
-are broken into MF-01…MF-14, ordered by phase (build the SUT → automate → ship). A `/loop` will
-consume a `WORKLIST_mobile-forex-automation.md` derived from these.
+are broken into MF-01…MF-14, ordered by phase (build the SUT → automate → ship). MF-01…MF-12 are
+complete; MF-13 and MF-14 are the remaining ship/onboarding work.
 
 **Priority Scoring System:**
 - **Score = Value (0–10) + Breakage/Blocking (0–10) + Effort-inverse/Enablement (0–10)**
@@ -23,8 +23,8 @@ consume a `WORKLIST_mobile-forex-automation.md` derived from these.
 
 ## Outstanding Work (roadmap)
 
-Nothing is implemented yet — this is Phase 0 (docs + scaffold). The items below are the planned
-build order; each becomes one branch + PR when actioned.
+The build and automation phases are complete. The items below retain the delivery history and the
+two remaining Phase 4 outcomes.
 
 ### Phase 1 — Build the SUT (minimal vertical slice)
 - **MF-01 — Scaffold: Vite + TypeScript + CI skeleton.** ✅ **DONE 2026-07-08** (PR #1): app shell
@@ -59,14 +59,14 @@ build order; each becomes one branch + PR when actioned.
   balance** (the PRS "balance updates on closure"). Close button per position; trade-history panel.
   e2e predicts net + new balance from the **app-recorded** entry/exit (race-free). PRS oracle close:
   gross +£246.78 − £2.50 = **net £244.28**. 64 unit + 13 e2e.
-- **MF-08 — Responsive/adaptive layout.** ✅ **DONE 2026-07-09** (PR #7): pure `layoutFor(width)`
+- **MF-08 — Responsive/adaptive layout.** ✅ **DONE 2026-07-10** (PR #7): pure `layoutFor(width)`
   (mobile <600 / tablet 600–1024 / desktop >1024, PRS §2.2); CSS grid workspace — single column on
   mobile, watchlist-sidebar + main-dock split on desktop; `data-layout` reflects the breakpoint;
   resize listener with cleanup. e2e asserts **actual geometry** (bounding boxes: mobile stacks,
   desktop side-by-side) + live reflow across breakpoints. **Phase 1 COMPLETE.** 66 unit + 16 e2e.
 
 ### Phase 2 — Unit / logic tests (the cheap oracle)
-- **MF-09 — Unit boundary sweep.** ✅ **DONE 2026-07-09** (PR #8): ISTQB boundary-value +
+- **MF-09 — Unit boundary sweep.** ✅ **DONE 2026-07-10** (PR #8): ISTQB boundary-value +
   equivalence-partition sweep over the pure core (quote-cents identity, JPY conventions, half-away
   rounding both signs, commission scaling, swap accumulation/triple-Wednesday/JPY branch, and
   parametrised validation tables for volume / SL-TP-on-entry / timestamp / exit-price). **Caught a
@@ -75,19 +75,20 @@ build order; each becomes one branch + PR when actioned.
   + 16 e2e. **Phase 2 complete.**
 
 ### Phase 3 — Mobile E2E suite (the deliverable)
-- **MF-10 — E2E journeys (mobile emulation).** ✅ **DONE 2026-07-09** (PR #9): Playwright device
+- **MF-10 — E2E journeys (mobile emulation).** ✅ **DONE 2026-07-10** (PR #9): Playwright device
   projects — **Pixel 7 (Chromium/Android)** + **iPhone 14 (WebKit/iOS)**, real mobile viewports with
   `hasTouch`; `tests/e2e/mobile/**` routed to them (desktop specs `testIgnore` the dir). Full
   lifecycle by **`tap()`** (touch): login → watchlist → buy → close → history → balance, race-free
   deterministic; asserts the touch/mobile-viewport context. CI installs chromium+webkit. **Caught +
   fixed a real mobile flakiness bug:** the Close button jittered each tick (row reflow as P&L text
   width changed) → `table-layout: fixed`. 90 unit + 22 e2e (14 desktop + 4×2 mobile), flake-free ×4.
-- **MF-11 — E2E responsive breakpoints (on device).** ✅ **DONE 2026-07-09** (PR #10): responsive
+- **MF-11 — E2E responsive breakpoints (on device).** ✅ **DONE 2026-07-10** (PR #10): responsive
   layout verified on the **real** Pixel/iPhone device viewports (not a resized desktop) — portrait
   sub-600 viewport selects the mobile layout; panes stack single-pane (geometry); **no horizontal
   overflow** with a position on screen (mobile hygiene). Desktop-split half stays in
-  `responsive.spec.ts`. 90 unit + 28 e2e. **Phase 3 core E2E complete** (MF-12 Screenplay optional).
-- **MF-12 — Screenplay layer for the mobile E2E.** ✅ **DONE 2026-07-09** (PR #11; design Q2
+  `responsive.spec.ts`. 90 unit + 28 e2e. **Phase 3 core E2E complete**; MF-12 subsequently added
+  the Screenplay layer.
+- **MF-12 — Screenplay layer for the mobile E2E.** ✅ **DONE 2026-07-13** (PR #11; design Q2
   resolved = yes, user-confirmed): hand-rolled, framework-free layer in the portfolio's house style
   under `tests/screenplay/` — `Actor.named('Ada').whoCan(BrowseTheWeb.using(page))` attempts
   touch-first Tasks (`Login`, `PlaceMarketOrder`, `WaitUntilPriceMoves`, `ClosePosition`) and asks
@@ -98,17 +99,21 @@ build order; each becomes one branch + PR when actioned.
   work. 90 unit + 28 e2e. **Phase 3 complete.**
 
 ### Phase 4 — Ship
-- **MF-13 — CI gate + Pages demo.** Unit + E2E green in CI; deploy the SUT to Pages as a live demo.
-- **MF-14 — Handover v1 + registry row + landing-page card.** Onboard to the registry (fan-outs → 8);
-  add the card to `portfolio-landing/`.
+- **MF-13 — CI gate + Pages demo.** 🟡 **IN PROGRESS:** CI is implemented and green on `main`
+  (Node 24; strict typecheck + 90 unit + 28 E2E executions). Remaining: configure the Vite asset
+  base, deploy the built SUT to GitHub Pages, smoke-test the public URL, and record it in the README
+  and repository homepage.
+- **MF-14 — Handover v1 + registry row + landing-page card.** ⬜ **OPEN:** onboard to the registry
+  (`orchestration_target: true`, making eight fan-out targets), write the first handover, and add the
+  live-demo card to `portfolio-landing/`.
 
 ---
 
 ## Risk Summary
 | Priority | Count | Status |
 |---|---|---|
-| **Total Outstanding** | 14 (MF-01…MF-14) | Roadmap — none started (Phase 0) |
-| Resolved | 0 | — |
+| **Total Outstanding** | 2 (MF-13, MF-14) | 1 in progress, 1 open |
+| Resolved | 12 (MF-01…MF-12) | Build + automation phases complete |
 
 ---
 
