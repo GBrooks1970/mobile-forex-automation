@@ -21,10 +21,12 @@ used.
 
 ## Status
 
-**Phase 4 — shipping.** MF-01…MF-13 are merged: the responsive SUT, deterministic domain core,
-desktop/mobile E2E, real Pixel/iPhone breakpoint checks, Screenplay journeys, CI gate, and verified
-Pages deployment are complete. The current gate is green with **90 unit tests + 28 Playwright
-executions**. Remaining work is MF-14 (portfolio onboarding, handover, and landing-page card). See
+**Phase 4 — complete.** MF-01…MF-14 are merged: the responsive SUT, deterministic domain core,
+desktop/mobile E2E, real Pixel/iPhone breakpoint checks, Screenplay journeys, CI gate, verified
+Pages deployment, registry onboarding, [v1 handover](https://github.com/GBrooks1970/test-automation-portfolio/blob/main/session-notes/mobile-forex-automation_session-notes_v1_20260714T0629Z.md),
+and [portfolio landing card](https://gbrooks1970.github.io/portfolio/) are complete. The current gate
+is green with **90 unit tests + 28 Playwright executions** and the roadmap has zero outstanding
+items. See
 [`docs/design-document.md`](docs/design-document.md),
 [`docs/adr/ADR-0001-approach.md`](docs/adr/ADR-0001-approach.md) (approach: web + Playwright
 emulation, "A now, native later"), and [`docs/backlog.md`](docs/backlog.md) (roadmap MF-01…MF-14).
