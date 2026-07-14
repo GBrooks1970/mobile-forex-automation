@@ -1,11 +1,11 @@
 # Mobile Forex Automation — Design Document
 
-**Version:** v0.3
+**Version:** v0.4
 **Date:** 2026-07-08T00:00:00Z
 **Last Updated:** 2026-07-14
 **Author:** Gary Brooks (with Claude Fable 5)
 **Reviewer:** Gary Brooks (approved as-is, 2026-07-08)
-**Status:** Approved — MF-01…MF-13 complete; Phase 4 onboarding remains. Q1–Q3 are resolved:
+**Status:** Approved and delivered — MF-01…MF-14 complete; roadmap closed. Q1–Q3 are resolved:
 Vite + vanilla TS; Screenplay layer delivered at MF-12; repo name `mobile-forex-automation`.
 
 > Adapted from `templates/design-document.template.md`; sections that do not apply to a greenfield
@@ -59,7 +59,8 @@ SUT exists only to be tested.
   order → close → history and the responsive breakpoints, green locally and in CI.
 - [x] The project is CI-gated and has a verified
   [live demo](https://gbrooks1970.github.io/mobile-forex-automation/).
-- [ ] The project has a v1 handover and registry row (fan-outs → 8 targets); these remain MF-14.
+- [x] The project has a v1 handover, registry row (fan-outs → 8 targets), and public portfolio
+  landing-page card.
 
 ---
 
@@ -231,7 +232,7 @@ is one branch + PR, `/loop`-driven like the hand-baked cycle. Seeded as `docs/ba
 - **MF-11** E2E: responsive breakpoints (Pixel/iPhone/desktop) *(Phase 3)*
 - **MF-12** Screenplay layer for the business-facing mobile E2E *(Phase 3; complete)*
 - **MF-13** CI gate + Pages demo *(Phase 4; complete)*
-- **MF-14** Handover v1 + registry row + landing-page card *(Phase 4)*
+- **MF-14** Handover v1 + registry row + landing-page card *(Phase 4; complete)*
 
 ### Risk Mitigation
 | Risk | Prob | Impact | Mitigation |
@@ -291,3 +292,4 @@ financing; *SUT* — system under test. **References:** the forex PRS
 | v0.1 (approved) | 2026-07-08 | Gary Brooks | Approved as-is; Q1–Q3 resolved to proposed defaults; Phase 1 authorised |
 | v0.2 | 2026-07-13 | Gary Brooks + Codex | Reconciled implementation status after MF-12; traceability complete; Phase 4 remains |
 | v0.3 | 2026-07-14 | Gary Brooks + Codex | Recorded verified Pages deployment; MF-13 complete; MF-14 remains |
+| v0.4 | 2026-07-14 | Gary Brooks + Codex | Recorded registry, handover, and deployed landing card; MF-14 and roadmap complete |

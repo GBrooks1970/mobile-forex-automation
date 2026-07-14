@@ -6,15 +6,15 @@
 
 # Mobile Forex Automation — Backlog
 
-**Version:** 4 — MF-01…MF-13 complete; MF-14 onboarding underway
+**Version:** 5 — MF-01…MF-14 complete; roadmap closed
 **Last Updated:** 2026-07-14
-**Based on:** `docs/design-document.md` v0.3 and the Mobile Forex Trading App PRS in
+**Based on:** `docs/design-document.md` v0.4 and the Mobile Forex Trading App PRS in
 `project-specs/`. Approach fixed by `docs/adr/ADR-0001-approach.md` (web + Playwright emulation).
 
 This backlog is the project's **source of truth** for item status. The vertical slice + automation
-are broken into MF-01…MF-14, ordered by phase (build the SUT → automate → ship). MF-01…MF-13 are
-complete; MF-14 is underway: registry onboarding is complete, while the first handover and landing
-card remain.
+are broken into MF-01…MF-14, ordered by phase (build the SUT → automate → ship). MF-01…MF-14 are
+complete; registry onboarding, the first handover, and the public landing card are all merged and
+verified.
 
 **Priority Scoring System:**
 - **Score = Value (0–10) + Breakage/Blocking (0–10) + Effort-inverse/Enablement (0–10)**
@@ -22,10 +22,10 @@ card remain.
 
 ---
 
-## Outstanding Work (roadmap)
+## Delivery History (completed roadmap)
 
-The build, automation, CI, and public-demo outcomes are complete. The items below retain delivery
-history and the one remaining Phase 4 onboarding outcome, now in progress.
+The build, automation, CI, public-demo, and portfolio-onboarding outcomes are complete. The items
+below retain the delivery history; there is no outstanding roadmap work.
 
 ### Phase 1 — Build the SUT (minimal vertical slice)
 - **MF-01 — Scaffold: Vite + TypeScript + CI skeleton.** ✅ **DONE 2026-07-08** (PR #1): app shell
@@ -106,18 +106,21 @@ history and the one remaining Phase 4 onboarding outcome, now in progress.
   deployment succeeded and the public [live demo](https://gbrooks1970.github.io/mobile-forex-automation/)
   passed an HTTP 200 + login → order → price move → close → history → balance smoke journey with
   zero console/page errors.
-- **MF-14 — Handover v1 + registry row + landing-page card.** 🟨 **IN PROGRESS:** registry onboarding
-  completed on 2026-07-14 in `portfolio-prompts` PR #32
-  (`orchestration_target: true`, making eight fan-out targets). Remaining, in merge-gated order:
-  write the first handover, then add the live-demo card to `portfolio-landing/`.
+- **MF-14 — Handover v1 + registry row + landing-page card.** ✅ **DONE 2026-07-14:** registered by
+  [`portfolio-prompts` PR #32](https://github.com/NeoCognitus70/portfolio-prompts/pull/32) as an
+  `orchestration_target: true` project, making eight fan-out targets; published the first
+  [versioned handover](https://github.com/GBrooks1970/test-automation-portfolio/blob/main/session-notes/mobile-forex-automation_session-notes_v1_20260714T0629Z.md)
+  through parent-repository PR #5; and added the repository, live-demo, and CI links to the public
+  [portfolio landing page](https://gbrooks1970.github.io/portfolio/) through portfolio PR #1. The
+  deployed page was verified against merge `1fb2ddf`.
 
 ---
 
 ## Risk Summary
 | Priority | Count | Status |
 |---|---|---|
-| **Total Outstanding** | 1 (MF-14) | In progress — registry complete; 2 artefacts remain |
-| Resolved | 13 (MF-01…MF-13) | Build + automation + public demo complete |
+| **Total Outstanding** | 0 | Roadmap complete |
+| Resolved | 14 (MF-01…MF-14) | Build + automation + public demo + portfolio onboarding complete |
 
 ---
 

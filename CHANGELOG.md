@@ -11,12 +11,16 @@ uses [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 - Added a GitHub Pages build/deployment workflow and repository-subpath-safe Vite configuration.
 - Added the verified public demo at <https://gbrooks1970.github.io/mobile-forex-automation/>.
+- Added the project as the eighth `portfolio-prompts` orchestration target.
+- Added the first versioned project handover and the public portfolio landing-page card.
 
 ### Changed
 
 - Published the repository for portfolio review.
 - Reconciled project status and traceability after completion of MF-12.
 - Closed MF-13 after the first `main` deployment and public trading-journey smoke test passed.
+- Closed MF-14 after registry onboarding, handover publication, and landing-card deployment were
+  independently merged and verified.
 
 ## [0.1.0] — 2026-07-13
 
