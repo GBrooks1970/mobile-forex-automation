@@ -144,7 +144,7 @@ function renderShell(profile: Profile): void {
   const orderForm = root.querySelector<HTMLFormElement>('[data-testid="order-form"]');
   orderForm?.addEventListener('submit', (event) => {
     event.preventDefault();
-    const submitter = (event as SubmitEvent).submitter as HTMLButtonElement | null;
+    const submitter = event.submitter as HTMLButtonElement | null;
     const direction = (submitter?.value ?? 'BUY') as TradeDirection;
     placeOrder(active, direction);
   });

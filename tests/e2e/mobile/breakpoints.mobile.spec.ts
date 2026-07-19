@@ -32,6 +32,8 @@ test('the workspace is single-pane on the device: panes stack, not side by side'
   const main = await page.getByTestId('col-main').boundingBox();
   expect(watch).not.toBeNull();
   expect(main).not.toBeNull();
+  // TS narrowing only -- the expects above already fail the test first if either is null.
+  // eslint-disable-next-line playwright/no-conditional-in-test
   if (!watch || !main) return;
 
   // Stacked: main starts at/after the watchlist's bottom, sharing the left edge.

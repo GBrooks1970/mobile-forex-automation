@@ -47,7 +47,13 @@ test('prices tick deterministically under the seed (replay predicts the exact pr
     predicted = { pricePts: tick.pricePts, direction: tick.direction };
   }
 
+  // shownPrice/shownDirection are a point-in-time snapshot paired with `seq` above, not a
+  // live locator read: a retrying web-first assertion here could poll past this tick and
+  // race the tearing this file's other test explicitly guards against with an atomic
+  // in-page evaluate().
+  // eslint-disable-next-line playwright/prefer-web-first-assertions
   expect(shownPrice).toBe(formatPricePts('GBP/USD', predicted.pricePts));
+  // eslint-disable-next-line playwright/prefer-web-first-assertions -- see above
   expect(shownDirection).toBe(predicted.direction);
 });
 
@@ -60,6 +66,11 @@ test('tick flashes colour the price cell by direction (green up, red down)', asy
   // ATOMIC in-page read each time (avoids tearing across a tick boundary).
   const seen = new Set<string>();
   let lastSeq = 0;
+  // The loop bound and the branch on each tick's observed direction are inherent to this
+  // test's design: it can't know in advance which ticks will be up vs. down, only that the
+  // seeded walk yields both within 30 attempts. Whichever direction is observed, its
+  // class <-> data-direction agreement is still unconditionally asserted every iteration.
+  /* eslint-disable playwright/no-conditional-in-test, playwright/no-conditional-expect */
   for (let attempts = 0; attempts < 30 && seen.size < 2; attempts++) {
     await expect
       .poll(async () => Number(await row.getAttribute('data-seq')), { timeout: 15_000 })
@@ -67,7 +78,7 @@ test('tick flashes colour the price cell by direction (green up, red down)', asy
     const snap = await row.evaluate((el) => ({
       seq: Number((el as HTMLElement).dataset['seq']),
       direction: (el as HTMLElement).dataset['direction'],
-      cls: el.className,
+      cls: (el as HTMLElement).className,
     }));
     lastSeq = snap.seq;
     if (snap.direction === 'up') {
@@ -80,6 +91,7 @@ test('tick flashes colour the price cell by direction (green up, red down)', asy
       seen.add('down');
     }
   }
+  /* eslint-enable playwright/no-conditional-in-test, playwright/no-conditional-expect */
   expect([...seen].sort()).toEqual(['down', 'up']);
 });
 

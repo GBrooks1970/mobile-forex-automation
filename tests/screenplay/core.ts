@@ -3,7 +3,8 @@
 // using abilities, attempt tasks and ask questions. No framework dependency;
 // just enough structure for the mobile journeys to read as user stories.
 
-export interface Ability {}
+// Marker type: any class (structurally) can be an Ability -- see AbilityType below.
+export type Ability = object;
 
 /**
  * The ability lookup key: the class itself. Typed structurally (prototype +
