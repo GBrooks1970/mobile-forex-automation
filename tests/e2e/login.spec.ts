@@ -13,6 +13,21 @@ test('logging in creates the £10,000 demo profile', async ({ page }) => {
   await expect(page.getByTestId('account-balance')).toHaveText('£10,000.00');
 });
 
+test('a crafted email cannot inject markup into the signed-in indicator', async ({ page }) => {
+  // The email shape check (validateCredentials) admits any non-whitespace
+  // character, including `<`/`>` — the account-email span must render this
+  // as literal text, not parse it as HTML.
+  await page.goto('/');
+  await page.getByTestId('login-email').fill('<b>x</b>@x.co');
+  await page.getByTestId('login-password').fill('any-password');
+  await page.getByTestId('login-submit').click();
+
+  await expect(page.getByTestId('trading-shell')).toBeVisible();
+  const emailField = page.getByTestId('account-email');
+  await expect(emailField).toHaveText('<b>x</b>@x.co');
+  await expect(emailField.locator('b')).toHaveCount(0); // no injected element
+});
+
 test('a malformed email is rejected with a visible error', async ({ page }) => {
   await page.goto('/');
   await page.getByTestId('login-email').fill('not-an-email');

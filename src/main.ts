@@ -44,6 +44,21 @@ function applyLayout(): void {
 
 const rateFor = (pair: CurrencyPair): number | null => feed.gbpQuoteRatePts(pair);
 
+/**
+ * Escapes a string for safe interpolation into `innerHTML` template literals.
+ * Every `${...}` slot below that can carry non-literal data (the signed-in
+ * email, persisted across reloads via localStorage; login error messages)
+ * must go through this — a literal string constant never needs it.
+ */
+function escapeHtml(value: string): string {
+  return value
+    .replace(/&/g, '&amp;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;')
+    .replace(/"/g, '&quot;')
+    .replace(/'/g, '&#39;');
+}
+
 function renderLogin(errorMessages: string[] = []): void {
   root.innerHTML = `
     <header class="app-header">
@@ -60,7 +75,7 @@ function renderLogin(errorMessages: string[] = []): void {
           <input type="password" name="password" data-testid="login-password" autocomplete="current-password" required>
         </label>
         <div class="form-errors" data-testid="login-errors" role="alert">
-          ${errorMessages.map((m) => `<p>${m}</p>`).join('')}
+          ${errorMessages.map((m) => `<p>${escapeHtml(m)}</p>`).join('')}
         </div>
         <button type="submit" data-testid="login-submit">Sign in</button>
       </form>
@@ -101,7 +116,7 @@ function renderShell(profile: Profile): void {
     <header class="app-header shell-header">
       <h1 data-testid="app-title">${appName}</h1>
       <div class="session-info">
-        <span data-testid="account-email">${profile.email}</span>
+        <span data-testid="account-email">${escapeHtml(profile.email)}</span>
         <span class="balance">Bal <b data-testid="account-balance">${formatGbpPence(profile.balancePence)}</b></span>
         <span class="equity">Eq <b data-testid="account-equity">${formatGbpPence(profile.balancePence)}</b></span>
         <button type="button" data-testid="sign-out">Sign out</button>
