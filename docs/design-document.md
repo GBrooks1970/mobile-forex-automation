@@ -252,7 +252,9 @@ N/A — greenfield project, nothing to refactor.
   the commission example (£2.50 total on 0.5 lots @ £2.50/side), triple-Wednesday swap weighting, and
   ISTQB-style boundaries (volume 0/negative; SL/TP ordering; `closed_at` == `opened_at`).
 - **E2E (Playwright device emulation):** Pixel 7 + iPhone descriptors, `hasTouch`, seeded SUT.
-  Screenplay journeys cover FR-1→FR-4; plain Playwright geometry assertions cover FR-5.
+  Screenplay journeys cover FR-1→FR-4; plain Playwright geometry assertions cover FR-5. The E2E lane
+  verifies app-vs-core consistency (the UI shows what the pure core computed for the seeded replay);
+  correctness itself is pinned by the PRS oracle in the unit lane above, not re-derived here.
 - **CI:** GitHub Actions, Node 24, Playwright browsers; unit + E2E gate on PR and push to main.
 - **Non-functional (future-cheap):** semantic markup leaves an axe-core accessibility pass and
   Playwright visual baselines as low-effort follow-ons (portfolio gaps B-4/B-5).
