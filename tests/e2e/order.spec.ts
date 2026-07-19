@@ -2,6 +2,7 @@ import { expect, test, type Page } from '@playwright/test';
 import { createFeed } from '../../src/core/feed.js';
 import { formatPricePts } from '../../src/core/format.js';
 import { grossPnlGbpPence } from '../../src/core/pnl.js';
+import { parsePricePts, gbp } from '../support/prices.js';
 
 // FR-3 (MF-06): place a market order -> open position with a live, deterministic
 // floating P&L. Uses ?seed= so the test can replay the feed and predict the
@@ -58,16 +59,11 @@ test('floating P&L is deterministic: replay predicts the exact value shown', asy
 
   // Reconstruct integer entry/current from the seeded feed to predict the P&L.
   // Entry price string -> points; current price string -> points.
-  const toPts = (s: string) => Math.round(parseFloat(s) * 100_000);
-  const entryPts = toPts((entryText ?? '').trim());
-  const currentPts = toPts(snap.price);
+  const entryPts = parsePricePts('GBP/USD', (entryText ?? '').trim());
+  const currentPts = parsePricePts('GBP/USD', snap.price);
   // Conversion rate: GBP/USD current price in points == currentPts here.
   const predictedPnl = grossPnlGbpPence('GBP/USD', 'BUY', 10, entryPts, currentPts, currentPts);
-  const predictedText = `${predictedPnl < 0 ? '-' : ''}£${(Math.abs(predictedPnl) / 100).toLocaleString(
-    'en-GB',
-    { minimumFractionDigits: 2, maximumFractionDigits: 2 },
-  )}`;
-  expect(snap.pnl).toBe(predictedText);
+  expect(snap.pnl).toBe(gbp(predictedPnl));
 
   // Sanity: the displayed price is a real price the feed emits for GBP/USD.
   const replay = createFeed(SEED);

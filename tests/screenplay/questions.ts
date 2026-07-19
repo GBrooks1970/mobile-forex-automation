@@ -3,8 +3,8 @@
 
 import type { Actor, Question } from './core.js';
 import { BrowseTheWeb } from './abilities/BrowseTheWeb.js';
-
-const toPts = (s: string): number => Math.round(parseFloat(s) * 100_000);
+import { parsePricePts } from '../support/prices.js';
+import type { CurrencyPair } from '../../src/core/types.js';
 
 /** The displayed account cash balance, e.g. "£10,000.00". */
 export class TheAccountBalance implements Question<string> {
@@ -44,17 +44,23 @@ export class TheOpenPositionId implements Question<string> {
 
 /** The entry/exit prices the app recorded in a trade's history row (integer points). */
 export class TheRecordedPrices implements Question<{ entryPts: number; exitPts: number }> {
-  private constructor(private readonly tradeId: string) {}
+  private constructor(
+    private readonly tradeId: string,
+    private readonly pair: CurrencyPair,
+  ) {}
 
-  static ofClosedTrade(tradeId: string): TheRecordedPrices {
-    return new TheRecordedPrices(tradeId);
+  static ofClosedTrade(tradeId: string, pair: CurrencyPair): TheRecordedPrices {
+    return new TheRecordedPrices(tradeId, pair);
   }
 
   async answeredBy(actor: Actor): Promise<{ entryPts: number; exitPts: number }> {
     const { page } = actor.abilityTo(BrowseTheWeb);
     const entry = (await page.getByTestId(`history-entry-${this.tradeId}`).textContent()) ?? '';
     const exit = (await page.getByTestId(`history-exit-${this.tradeId}`).textContent()) ?? '';
-    return { entryPts: toPts(entry.trim()), exitPts: toPts(exit.trim()) };
+    return {
+      entryPts: parsePricePts(this.pair, entry),
+      exitPts: parsePricePts(this.pair, exit),
+    };
   }
 
   toString(): string {

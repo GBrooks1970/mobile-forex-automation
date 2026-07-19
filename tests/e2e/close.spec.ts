@@ -1,5 +1,6 @@
 import { expect, test, type Page } from '@playwright/test';
 import { commissionPence, grossPnlGbpPence } from '../../src/core/pnl.js';
+import { parsePricePts, gbp } from '../support/prices.js';
 
 // FR-4 (MF-07): close a position -> realised net P&L -> immutable history row
 // -> cash balance updates by EXACTLY the net (replay-predicted, no tolerance).
@@ -13,13 +14,6 @@ async function login(page: Page): Promise<void> {
   await page.getByTestId('login-submit').click();
   await expect(page.getByTestId('trading-shell')).toBeVisible();
 }
-
-const toPts = (s: string): number => Math.round(parseFloat(s) * 100_000);
-const gbp = (pence: number): string =>
-  `${pence < 0 ? '-' : ''}£${(Math.abs(pence) / 100).toLocaleString('en-GB', {
-    minimumFractionDigits: 2,
-    maximumFractionDigits: 2,
-  })}`;
 
 test('closing a position realises net P&L, writes history, and moves the balance exactly', async ({
   page,
@@ -50,8 +44,8 @@ test('closing a position realises net P&L, writes history, and moves the balance
   // row (not from a live cell that a tick could change under us). This verifies
   // the app's own internal consistency: net = gross(entry->exit) - commission,
   // and that the balance moved by exactly that net.
-  const entryPts = toPts((await page.getByTestId(`history-entry-${tradeId}`).textContent()) ?? '');
-  const exitPts = toPts((await page.getByTestId(`history-exit-${tradeId}`).textContent()) ?? '');
+  const entryPts = parsePricePts('GBP/USD', (await page.getByTestId(`history-entry-${tradeId}`).textContent()) ?? '');
+  const exitPts = parsePricePts('GBP/USD', (await page.getByTestId(`history-exit-${tradeId}`).textContent()) ?? '');
   const gross = grossPnlGbpPence('GBP/USD', 'BUY', 10, entryPts, exitPts, exitPts);
   const net = gross - commissionPence(10);
 
