@@ -6,6 +6,8 @@ import { defineConfig, devices } from '@playwright/test';
 // The rest of tests/e2e/** exercises the app on desktop Chrome.
 export default defineConfig({
   testDir: './tests/e2e',
+  // Only serialises tests WITHIN a file; different files/projects still run in parallel
+  // (the `workers` default and the 4-way project matrix above are unaffected).
   fullyParallel: false,
   forbidOnly: !!process.env.CI,
   retries: 0,
