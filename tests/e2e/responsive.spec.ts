@@ -23,6 +23,8 @@ test('mobile (375px): panes stack in a single column', async ({ page }) => {
   const main = await page.getByTestId('col-main').boundingBox();
   expect(watch).not.toBeNull();
   expect(main).not.toBeNull();
+  // TS narrowing only -- the expects above already fail the test first if either is null.
+  // eslint-disable-next-line playwright/no-conditional-in-test
   if (!watch || !main) return;
 
   // Stacked: the main column starts at/after the watchlist column's bottom, and
@@ -41,6 +43,8 @@ test('desktop (1280px): watchlist sits beside the main dock', async ({ page }) =
   const main = await page.getByTestId('col-main').boundingBox();
   expect(watch).not.toBeNull();
   expect(main).not.toBeNull();
+  // TS narrowing only -- the expects above already fail the test first if either is null.
+  // eslint-disable-next-line playwright/no-conditional-in-test
   if (!watch || !main) return;
 
   // Side by side: the main column is to the RIGHT of the watchlist, and their
