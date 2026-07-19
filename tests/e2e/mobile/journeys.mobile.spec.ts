@@ -10,6 +10,7 @@ import {
   TheRecordedPrices,
   TheWorkspaceLayout,
 } from '../../screenplay/questions.js';
+import { gbp } from '../../support/prices.js';
 
 // MF-10/MF-12 (the deliverable): the full trade lifecycle on REAL mobile device
 // emulation — Pixel 7 (Chromium/Android) and iPhone 14 (WebKit/iOS), touch
@@ -18,12 +19,6 @@ import {
 // keeps every assertion deterministic (exact values, no tolerance).
 
 const SEED = 771;
-
-const gbp = (pence: number): string =>
-  `${pence < 0 ? '-' : ''}£${(Math.abs(pence) / 100).toLocaleString('en-GB', {
-    minimumFractionDigits: 2,
-    maximumFractionDigits: 2,
-  })}`;
 
 test('the device context is a touch-capable mobile viewport', async ({ page }) => {
   const ada = Actor.named('Ada').whoCan(BrowseTheWeb.using(page));
@@ -58,7 +53,7 @@ test('full lifecycle by touch: login -> watchlist -> buy -> close -> history -> 
 
   // Race-free determinism: predict net + new balance from the entry/exit the
   // APP RECORDED in the history row, via the same core the app uses.
-  const { entryPts, exitPts } = await ada.asks(TheRecordedPrices.ofClosedTrade(tradeId));
+  const { entryPts, exitPts } = await ada.asks(TheRecordedPrices.ofClosedTrade(tradeId, 'GBP/USD'));
   const net = grossPnlGbpPence('GBP/USD', 'BUY', 10, entryPts, exitPts, exitPts) - commissionPence(10);
 
   expect(await ada.asks(TheRecordedNetPnl.ofClosedTrade(tradeId))).toBe(gbp(net));
