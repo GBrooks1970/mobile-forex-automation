@@ -59,7 +59,7 @@ function escapeHtml(value: string): string {
     .replace(/'/g, '&#39;');
 }
 
-function renderLogin(errorMessages: string[] = []): void {
+function renderLogin(errorMessages: string[] = [], typedEmail = ''): void {
   root.innerHTML = `
     <header class="app-header">
       <h1 data-testid="app-title">${appName}</h1>
@@ -69,7 +69,7 @@ function renderLogin(errorMessages: string[] = []): void {
       <h2 id="login-heading">Sign in</h2>
       <form data-testid="login-form" novalidate>
         <label>Email
-          <input type="email" name="email" data-testid="login-email" autocomplete="username" required>
+          <input type="email" name="email" data-testid="login-email" autocomplete="username" required value="${escapeHtml(typedEmail)}">
         </label>
         <label>Password
           <input type="password" name="password" data-testid="login-password" autocomplete="current-password" required>
@@ -90,7 +90,7 @@ function renderLogin(errorMessages: string[] = []): void {
     const password = (form.elements.namedItem('password') as HTMLInputElement).value;
     const problems = validateCredentials(email, password);
     if (problems.length > 0) {
-      renderLogin(problems.map((p) => p.message));
+      renderLogin(problems.map((p) => p.message), email);
       return;
     }
     const profile = createProfile(email);

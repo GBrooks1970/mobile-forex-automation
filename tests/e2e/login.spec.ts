@@ -36,6 +36,7 @@ test('a malformed email is rejected with a visible error', async ({ page }) => {
 
   await expect(page.getByTestId('login-errors')).toContainText('valid email');
   await expect(page.getByTestId('login-form')).toBeVisible(); // still on login
+  await expect(page.getByTestId('login-email')).toHaveValue('not-an-email'); // typed value preserved
 });
 
 test('the profile survives a reload and sign-out returns to login', async ({ page }) => {
