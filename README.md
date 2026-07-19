@@ -45,7 +45,8 @@ optional later **Phase B** (ADR-0001).
   responsive reflow.
 - **Mobile E2E:** Pixel 7 (Chromium/Android characteristics) and iPhone 14 (WebKit/iOS
   characteristics), using touch input for the full Screenplay trading journey plus real-viewport
-  breakpoint and overflow assertions.
+  breakpoint and overflow assertions. The E2E lane verifies app-vs-core consistency; correctness is
+  pinned by the PRS oracle in the unit lane.
 - **CI:** `npm run verify` on every PR and push to `main`, with Playwright reports retained on
   failure.
 - **Deployment:** the Vite production artifact is published from `main` by GitHub Pages and the
