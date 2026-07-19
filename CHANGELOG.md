@@ -13,6 +13,8 @@ uses [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 - Added the verified public demo at <https://gbrooks1970.github.io/mobile-forex-automation/>.
 - Added the project as the eighth `portfolio-prompts` orchestration target.
 - Added the first versioned project handover and the public portfolio landing-page card.
+- Added flat-config ESLint (type-checked rules + `eslint-plugin-playwright`), folded into `verify`
+  and CI, and an `npm audit --audit-level=high` CI step (TRIAGE-03, TRIAGE-04).
 
 ### Changed
 
@@ -21,6 +23,15 @@ uses [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 - Closed MF-13 after the first `main` deployment and public trading-journey smoke test passed.
 - Closed MF-14 after registry onboarding, handover publication, and landing-card deployment were
   independently merged and verified.
+- Consolidated three duplicated `toPts` test helpers into a single pair-aware
+  `tests/support/prices.ts`, fixing a latent JPY-pair miscalculation (TRIAGE-02).
+- `appVersion` is now imported from `package.json` instead of duplicated as a literal (TRIAGE-06).
+
+### Fixed
+
+- Fixed unescaped, non-literal `innerHTML` interpolations (signed-in email, login errors) that could
+  admit markup injection (TRIAGE-01, review R-1).
+- Fixed `renderLogin` clearing the typed email on a validation error (TRIAGE-06).
 
 ## [0.1.0] — 2026-07-13
 

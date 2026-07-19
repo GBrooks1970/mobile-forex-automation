@@ -6,15 +6,15 @@
 
 # Mobile Forex Automation — Backlog
 
-**Version:** 5 — MF-01…MF-14 complete; roadmap closed
-**Last Updated:** 2026-07-14
+**Version:** 6 — MF-01…MF-14 and TRIAGE-01…06 complete; roadmap closed
+**Last Updated:** 2026-07-19
 **Based on:** `docs/design-document.md` v0.4 and the Mobile Forex Trading App PRS in
 `project-specs/`. Approach fixed by `docs/adr/ADR-0001-approach.md` (web + Playwright emulation).
 
 This backlog is the project's **source of truth** for item status. The vertical slice + automation
-are broken into MF-01…MF-14, ordered by phase (build the SUT → automate → ship). MF-01…MF-14 are
-complete; registry onboarding, the first handover, and the public landing card are all merged and
-verified.
+are broken into MF-01…MF-14, ordered by phase (build the SUT → automate → ship); TRIAGE-01…06 are
+the follow-on code-review remediation cycle. All items are complete; registry onboarding, the first
+handover, and the public landing card are all merged and verified.
 
 **Priority Scoring System:**
 - **Score = Value (0–10) + Breakage/Blocking (0–10) + Effort-inverse/Enablement (0–10)**
@@ -114,13 +114,42 @@ below retain the delivery history; there is no outstanding roadmap work.
   [portfolio landing page](https://gbrooks1970.github.io/portfolio/) through portfolio PR #1. The
   deployed page was verified against merge `1fb2ddf`.
 
+### Phase 5 — Code review remediation (`.review/CODE_REVIEW_FABLE_v1_20260718T0608Z/`)
+- **TRIAGE-01 — Escape non-literal `innerHTML` interpolations.** ✅ **DONE 2026-07-19** (PR #18):
+  `escapeHtml()` helper added, used at both non-literal interpolation sites (signed-in email, login
+  error messages); e2e regression proves a crafted `<b>x</b>@x.co` email renders as literal text.
+  Review R-1 (MEDIUM). 90 unit + 29 e2e.
+- **TRIAGE-02 — Pair-aware price parser; dedupe `toPts`/`gbp` test helpers.** ✅ **DONE 2026-07-19**
+  (PR #19): `tests/support/prices.ts` added (`parsePricePts` — exact integer inverse of
+  `formatPricePts`, pair-aware via `pointDecimals`; `gbp`); replaces three duplicated hard-coded
+  5-decimal `toPts` definitions (latent JPY-pair bug) and two duplicated `gbp()` formatters;
+  `TheRecordedPrices` now takes a `pair` param. Review R-2 (MEDIUM). 90 unit + 29 e2e.
+- **TRIAGE-03 — Flat-config ESLint (type-checked) + `eslint-plugin-playwright`.** ✅ **DONE
+  2026-07-19** (PR #20): `eslint.config.mjs` (type-checked rules for `src/**`+`tests/**`, plain
+  recommended for root `*.config.ts` files, Playwright plugin for `tests/e2e/**`); `lint` script
+  (`--max-warnings 0`) folded into `verify` and CI. Fixed 3 real findings the new gate surfaced;
+  added 2 scoped, justified suppressions rather than blanket rule-offs. Review R-3 (MEDIUM).
+- **TRIAGE-04 — Align CI/Pages action majors; add `npm audit` to CI.** ✅ **DONE 2026-07-19**
+  (PR #21): `ci.yml` bumped `actions/checkout`/`actions/setup-node` to match `pages.yml`'s
+  already-proven `@v7`/`@v6`; new "Audit dependencies" step (`npm audit --audit-level=high`, 0
+  vulnerabilities). Review R-4 (LOW).
+- **TRIAGE-05 — State the E2E-vs-unit oracle distinction.** ✅ **DONE 2026-07-19** (PR #22):
+  docs-only; one sentence added to README.md's Test evidence section and design-document.md §8.
+  Review R-5 (LOW).
+- **TRIAGE-06 — Dedupe `appVersion`; preserve typed email; `fullyParallel` comment; prune stale
+  branches.** ✅ **DONE 2026-07-19** (PR #23): `appVersion` now imported from `package.json`
+  (single source of truth); `renderLogin` preserves the typed email on a validation error (new e2e
+  regression); `fullyParallel: false` documented; 5 stale merged remote branches pruned. Review R-6
+  (LOW, 4 of 5 sub-items — the "newer tool majors available" sub-item was dropped as non-actionable
+  at triage time). **Phase 5 complete — review worklist 6/6.**
+
 ---
 
 ## Risk Summary
 | Priority | Count | Status |
 |---|---|---|
 | **Total Outstanding** | 0 | Roadmap complete |
-| Resolved | 14 (MF-01…MF-14) | Build + automation + public demo + portfolio onboarding complete |
+| Resolved | 14 (MF-01…MF-14) + 6 (TRIAGE-01…06) | Build + automation + public demo + portfolio onboarding + review remediation complete |
 
 ---
 
