@@ -3,9 +3,9 @@
 //
 // Every price-parsing test previously reimplemented its own `toPts`, hard-coded
 // to a 5-decimal scale factor regardless of pair. That is correct for every
-// current journey (all trade GBP/USD), but wrong for a JPY-quoted pair
-// (3 decimals, src/core/types.ts `pointDecimals`) -- the first test that
-// exercises USD/JPY would silently get prices off by x100.
+// original GBP/USD-only journeys, but wrong for a JPY-quoted pair (3 decimals,
+// src/core/types.ts `pointDecimals`). CODEX-08 now exercises this helper through
+// a real USD/JPY browser lifecycle so that pair-awareness stays integration-tested.
 
 import { pointDecimals, type CurrencyPair } from '../../src/core/types.js';
 

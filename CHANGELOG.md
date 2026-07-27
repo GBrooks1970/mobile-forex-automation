@@ -9,6 +9,9 @@ uses [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ### Added
 
+- Added a desktop USD/JPY SELL lifecycle journey covering three-decimal pair formatting, exact
+  signed P&L and balance, and frozen history through the shared pair-aware helpers (CODEX-08,
+  review R-6).
 - Added the approved profile-only persistence notice to the trading shell and a deterministic E2E
   contract test proving reload keeps identity while resetting balance changes, positions, and
   history (CODEX-05, review R-3).
