@@ -31,30 +31,32 @@ test('prices tick deterministically under the seed (replay predicts the exact pr
   await login(page);
   const row = page.getByTestId('watch-row-GBP/USD');
 
-  // Wait until at least 3 ticks have landed, then read the seq we got.
+  // Wait until at least 3 ticks have landed, then capture the replay inputs in
+  // one browser evaluation so a subsequent tick cannot tear the three values.
   await expect(row).toHaveAttribute('data-seq', /^[3-9]\d*$|^[1-9]\d+$/, { timeout: 15_000 });
-  const seq = Number(await row.getAttribute('data-seq'));
-  const shownPrice = await page.getByTestId('watch-price-GBP/USD').textContent();
-  const shownDirection = await row.getAttribute('data-direction');
+  const snap = await row.evaluate((el) => {
+    const html = el as HTMLElement;
+    return {
+      seq: Number(html.dataset['seq']),
+      price: (html.querySelector('[data-testid="watch-price-GBP/USD"]')?.textContent ?? '').trim(),
+      direction: html.dataset['direction'],
+    };
+  });
 
   // Replay the same seed to the same seq and predict what MUST be on screen.
   // (The ticker advances every pair once per interval, so per-pair seq is
   // simply how many ticks that pair has taken.)
   const replay = createFeed(SEED);
   let predicted = { pricePts: 0, direction: 'flat' as string };
-  for (let i = 0; i < seq; i++) {
+  for (let i = 0; i < snap.seq; i++) {
     const tick = replay.nextTick('GBP/USD');
     predicted = { pricePts: tick.pricePts, direction: tick.direction };
   }
 
-  // shownPrice/shownDirection are a point-in-time snapshot paired with `seq` above, not a
-  // live locator read: a retrying web-first assertion here could poll past this tick and
-  // race the tearing this file's other test explicitly guards against with an atomic
-  // in-page evaluate().
-  // eslint-disable-next-line playwright/prefer-web-first-assertions
-  expect(shownPrice).toBe(formatPricePts('GBP/USD', predicted.pricePts));
-  // eslint-disable-next-line playwright/prefer-web-first-assertions -- see above
-  expect(shownDirection).toBe(predicted.direction);
+  expect({ price: snap.price, direction: snap.direction }).toEqual({
+    price: formatPricePts('GBP/USD', predicted.pricePts),
+    direction: predicted.direction,
+  });
 });
 
 test('tick flashes colour the price cell by direction (green up, red down)', async ({ page }) => {
