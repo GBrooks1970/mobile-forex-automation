@@ -6,9 +6,9 @@
 
 # Mobile Forex Automation — Backlog
 
-**Version:** 10 — Phase 6 second-review remediation active; CODEX-01…04 complete
+**Version:** 11 — Phase 6 second-review remediation active; CODEX-01…05 complete
 **Last Updated:** 2026-07-27
-**Based on:** `docs/design-document.md` v0.5 and the Mobile Forex Trading App PRS in
+**Based on:** `docs/design-document.md` v0.6 and the Mobile Forex Trading App PRS in
 `project-specs/`. Approach fixed by `docs/adr/ADR-0001-approach.md` (web + Playwright emulation);
 state lifetime fixed by `docs/adr/ADR-0002-profile-only-persistence.md`.
 
@@ -167,9 +167,11 @@ below retain the delivery history; there is no outstanding roadmap work.
   2026-07-27:** owner-approved ADR-0002 retains the signed-in identity while explicitly defining
   balance changes, open positions, and history as page-lifetime state that resets on reload. README
   and design wording distinguish profile persistence from durable account history and prescribe the
-  concise cue that CODEX-05 will surface and test. Review R-3 (MEDIUM).
-- **CODEX-05 — Surface and test the approved reload-reset behaviour.** **READY (MEDIUM):** add a
-  deterministic desktop journey and a concise UI cue for the CODEX-04 contract.
+  concise cue that CODEX-05 now surfaces and tests. Review R-3 (MEDIUM).
+- **CODEX-05 — Surface and test the approved reload-reset behaviour.** ✅ **DONE 2026-07-27:** the
+  trading shell now displays the ADR-0002 reset cue. A deterministic desktop journey creates closed
+  history and a changed balance, leaves another position open, reloads, then proves the same profile
+  remains signed in with £10,000, no positions, and no history. Review R-3 (MEDIUM).
 - **CODEX-06 — Enforce a safe business maximum for lot input.** **READY (MEDIUM):** use one
   documented limit across HTML, parsing, and domain validation with safe-integer boundary tests.
 - **CODEX-07 — Capture the watchlist replay snapshot atomically.** **READY (LOW):** read sequence,
@@ -188,8 +190,8 @@ below retain the delivery history; there is no outstanding roadmap work.
 ## Risk Summary
 | Priority | Count | Status |
 |---|---|---|
-| **Total Outstanding** | 6 | 2 MEDIUM + 4 LOW Phase 6 items |
-| Resolved | 14 (MF-01…MF-14) + 6 (TRIAGE-01…06) + 4 (CODEX-01…04) | Delivery history plus completed review remediation |
+| **Total Outstanding** | 5 | 1 MEDIUM + 4 LOW Phase 6 items |
+| Resolved | 14 (MF-01…MF-14) + 6 (TRIAGE-01…06) + 5 (CODEX-01…05) | Delivery history plus completed review remediation |
 
 ---
 

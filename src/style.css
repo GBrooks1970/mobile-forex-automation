@@ -36,6 +36,14 @@ body {
 .shell-header { display: flex; justify-content: space-between; align-items: center; gap: 12px; flex-wrap: wrap; }
 .session-info { display: flex; align-items: center; gap: 12px; font-size: 0.9rem; }
 .session-info .balance { font-weight: 700; }
+.demo-reset-hint {
+  margin: 12px 12px 0;
+  padding: 8px 12px;
+  border-left: 3px solid var(--accent);
+  background: #eaf1f8;
+  color: #34495e;
+  font-size: 0.85rem;
+}
 
 /* MF-05: watchlist with tick-direction flashes (PRS: green up, red down). */
 .watchlist { border-collapse: collapse; width: 100%; max-width: 420px; }
