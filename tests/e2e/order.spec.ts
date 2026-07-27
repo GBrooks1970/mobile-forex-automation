@@ -72,10 +72,18 @@ test('floating P&L is deterministic: replay predicts the exact value shown', asy
   expect(feedPrices.has(snap.price)).toBe(true);
 });
 
-test('a zero volume is rejected with a visible error and no position', async ({ page }) => {
+test('out-of-range volumes are rejected with a visible error and no position', async ({ page }) => {
   await login(page);
-  await page.getByTestId('order-volume').fill('0');
-  await page.getByTestId('order-buy').click();
-  await expect(page.getByTestId('order-errors')).toContainText('greater than 0');
+  const volume = page.getByTestId('order-volume');
+  await expect(volume).toHaveAttribute('min', '0.01');
+  await expect(volume).toHaveAttribute('max', '100.00');
+
+  for (const invalid of ['0', '100.01']) {
+    await volume.fill(invalid);
+    await page.getByTestId('order-buy').click();
+    await expect(page.getByTestId('order-errors')).toHaveText(
+      'Enter a volume from 0.01 to 100.00 lots',
+    );
+  }
   await expect(page.getByTestId('positions-empty')).toBeVisible();
 });

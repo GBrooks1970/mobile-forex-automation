@@ -7,6 +7,7 @@ import {
   swapQuoteCents,
 } from '../../src/core/pnl.js';
 import { validateClose, validateOpen, type OpenOrderInput } from '../../src/core/validate.js';
+import { MAX_VOLUME_LOTS2 } from '../../src/core/types.js';
 
 // MF-09: ISTQB-style boundary-value + equivalence-partition sweep over the pure
 // core, complementing the PRS oracle in pnl.spec.ts / validate.spec.ts.
@@ -20,6 +21,15 @@ describe('gross P&L — quote-currency conventions', () => {
     // 1 point on 0.10 lots = 10 cents; 620 points on 0.50 lots = 31000 cents ($310).
     expect(grossPnlQuoteCents('GBP/USD', 'BUY', 10, 125_000, 125_001)).toBe(10);
     expect(grossPnlQuoteCents('GBP/USD', 'BUY', 50, 125_000, 125_620)).toBe(31_000);
+    const atMaximum = grossPnlQuoteCents(
+      'GBP/USD',
+      'BUY',
+      MAX_VOLUME_LOTS2,
+      125_000,
+      125_620,
+    );
+    expect(atMaximum).toBe(6_200_000);
+    expect(Number.isSafeInteger(atMaximum)).toBe(true);
   });
 
   it('JPY: 0.10-lot move of 10 pips (100 points) is ¥1000 = 100000 sen', () => {
@@ -87,6 +97,9 @@ describe('validateOpen — volume boundary', () => {
     [0, false],
     [1, true],
     [10, true],
+    [MAX_VOLUME_LOTS2, true],
+    [MAX_VOLUME_LOTS2 + 1, false],
+    [Number.MAX_SAFE_INTEGER + 1, false],
   ])('volume2 %d -> valid=%s', (volumeLots2, valid) => {
     const ok = validateOpen({ ...baseBuy, volumeLots2 }).length === 0;
     expect(ok).toBe(valid);

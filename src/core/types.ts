@@ -38,13 +38,16 @@ export const POINTS_PER_PIP = 10;
 /** One standard lot = 100,000 units of the base currency. */
 export const UNITS_PER_LOT = 100_000;
 
+/** Demo risk limit: 100.00 standard lots, represented as exact integer hundredths. */
+export const MAX_VOLUME_LOTS2 = 10_000;
+
 /** An open position (PRS `open_trades` shape, integer representation). */
 export interface OpenTrade {
   tradeId: string;
   userId: string;
   currencyPair: CurrencyPair;
   tradeDirection: TradeDirection;
-  /** hundredths of a lot; must be > 0 */
+  /** hundredths of a lot; safe integer in the range 1..MAX_VOLUME_LOTS2 */
   volumeLots2: number;
   /** integer points */
   entryPricePts: number;

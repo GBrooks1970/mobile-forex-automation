@@ -2,7 +2,9 @@
 // BUY or SELL. Volume is entered in lots (e.g. 0.10) and parsed to integer
 // hundredths (lots2) at the edge.
 
-import { MVP_PAIRS } from '../core/types.js';
+import { MAX_VOLUME_LOTS2, MVP_PAIRS } from '../core/types.js';
+
+const MAX_VOLUME_LOTS_DISPLAY = (MAX_VOLUME_LOTS2 / 100).toFixed(2);
 
 export function renderOrderPanel(): string {
   const options = MVP_PAIRS.map((p) => `<option value="${p}">${p}</option>`).join('');
@@ -14,7 +16,10 @@ export function renderOrderPanel(): string {
           <select name="pair" data-testid="order-pair">${options}</select>
         </label>
         <label>Volume (lots)
-          <input name="volume" data-testid="order-volume" inputmode="decimal" value="0.10">
+          <input type="number" name="volume" data-testid="order-volume" inputmode="decimal"
+            min="0.01" max="${MAX_VOLUME_LOTS_DISPLAY}" step="0.01" value="0.10"
+            aria-describedby="volume-range">
+          <span class="hint" id="volume-range">Allowed range: 0.01–${MAX_VOLUME_LOTS_DISPLAY} lots.</span>
         </label>
         <div class="order-buttons">
           <button type="submit" name="direction" value="SELL" data-testid="order-sell" class="sell">Sell</button>
@@ -31,5 +36,5 @@ export function parseLots2(raw: string): number | null {
   if (!/^\d+(\.\d{1,2})?$/.test(trimmed)) return null;
   const [whole, frac = ''] = trimmed.split('.');
   const lots2 = Number(whole) * 100 + Number(frac.padEnd(2, '0'));
-  return Number.isInteger(lots2) ? lots2 : null;
+  return Number.isSafeInteger(lots2) && lots2 > 0 && lots2 <= MAX_VOLUME_LOTS2 ? lots2 : null;
 }
