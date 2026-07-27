@@ -17,7 +17,10 @@ The automation is the deliverable; the SUT exists only to be tested.
 
 **[Launch the live demo](https://gbrooks1970.github.io/mobile-forex-automation/)** — any
 well-formed email and password opens a £10,000 demo profile. No real money or live market data is
-used.
+used. The demo intentionally persists only the signed-in profile: **trading balance changes, open
+positions, and trade history reset on reload**. The matching in-app cue is: “Demo activity resets on
+reload; your profile stays signed in.” See
+[`ADR-0002`](docs/adr/ADR-0002-profile-only-persistence.md) for the approved boundary.
 
 ## Status
 
@@ -29,7 +32,10 @@ is green with **90 unit tests + 28 Playwright executions** and the roadmap has z
 items. See
 [`docs/design-document.md`](docs/design-document.md),
 [`docs/adr/ADR-0001-approach.md`](docs/adr/ADR-0001-approach.md) (approach: web + Playwright
-emulation, "A now, native later"), and [`docs/backlog.md`](docs/backlog.md) (roadmap MF-01…MF-14).
+emulation, "A now, native later"),
+[`docs/adr/ADR-0002-profile-only-persistence.md`](docs/adr/ADR-0002-profile-only-persistence.md)
+(profile persistence and trading-state reset), and [`docs/backlog.md`](docs/backlog.md) (roadmap
+MF-01…MF-14 plus review remediation).
 
 ## Approach
 

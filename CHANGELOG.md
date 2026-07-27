@@ -18,6 +18,9 @@ uses [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ### Changed
 
+- Defined the demo's profile-only persistence contract: reload keeps the signed-in identity but
+  resets trading balance changes, open positions, and history; ADR-0002 and the product-copy
+  contract make clear that the app does not provide durable account history (CODEX-04, review R-3).
 - Made the canonical Playwright gate own a fresh built-app preview server; pre-existing server reuse
   now requires the explicit interactive-only `PLAYWRIGHT_REUSE_SERVER=1` opt-in (CODEX-03,
   review R-2).
