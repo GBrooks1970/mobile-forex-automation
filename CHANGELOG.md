@@ -24,6 +24,8 @@ uses [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ### Changed
 
+- Aligned the declared Node engine range with the locked Vite and ESLint toolchain, documenting
+  Node 20 from 20.19 onwards locally while retaining Node 24 in CI (CODEX-09, review R-7).
 - Made the deterministic watchlist replay assertion atomic by capturing sequence, price, and
   direction in one browser evaluation, removing a structurally possible tick-boundary tear
   (CODEX-07, review R-5).

@@ -6,7 +6,7 @@
 
 # Mobile Forex Automation — Backlog
 
-**Version:** 14 — Phase 6 second-review remediation active; CODEX-01…08 complete
+**Version:** 15 — Phase 6 second-review remediation active; CODEX-01…09 complete
 **Last Updated:** 2026-07-27
 **Based on:** `docs/design-document.md` v0.7 and the Mobile Forex Trading App PRS in
 `project-specs/`. Approach fixed by `docs/adr/ADR-0001-approach.md` (web + Playwright emulation);
@@ -187,8 +187,10 @@ below retain the delivery history; there is no outstanding roadmap work.
   move, and verifies exact signed P&L, balance, and frozen history through the shared pair-aware
   helpers. The test remains outside `mobile/**`, so it runs once without multiplying the Pixel/iPhone
   matrix. Review R-6 (LOW).
-- **CODEX-09 — Align the declared Node range with the locked toolchain.** **READY (LOW):** declare
-  and document a Vite-compatible Node range while retaining Node 24 in CI.
+- **CODEX-09 — Align the declared Node range with the locked toolchain.** ✅ **DONE 2026-07-27:**
+  `package.json` and its lockfile now declare the shared Vite/ESLint-compatible range
+  `^20.19.0 || ^22.13.0 || >=24.0.0`; README recommends the locally exercised Node 20.19 baseline
+  and records Node 24 as the unchanged CI baseline. Review R-7 (LOW).
 - **CODEX-10 — Reconcile current test evidence and the FR-3 money model.** **READY (LOW):** update
   current execution evidence after CODEX-05/08 and state that cash changes only on close; preserve
   dated historical counts.
@@ -198,8 +200,8 @@ below retain the delivery history; there is no outstanding roadmap work.
 ## Risk Summary
 | Priority | Count | Status |
 |---|---|---|
-| **Total Outstanding** | 2 | 2 LOW Phase 6 items |
-| Resolved | 14 (MF-01…MF-14) + 6 (TRIAGE-01…06) + 8 (CODEX-01…08) | Delivery history plus completed review remediation |
+| **Total Outstanding** | 1 | 1 LOW Phase 6 item |
+| Resolved | 14 (MF-01…MF-14) + 6 (TRIAGE-01…06) + 9 (CODEX-01…09) | Delivery history plus completed review remediation |
 
 ---
 

@@ -62,6 +62,10 @@ optional later **Phase B** (ADR-0001).
 
 ## Commands
 
+Use Node.js 20.19 or later within the Node 20 release line for local development. The locked
+toolchain also supports Node 22 from 22.13 onwards, and Node 24+; CI uses Node 24 as the portfolio
+baseline.
+
 ```bash
 npm install
 npx playwright install chromium   # once, for the e2e lane
