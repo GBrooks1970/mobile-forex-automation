@@ -6,7 +6,7 @@
 
 # Mobile Forex Automation — Backlog
 
-**Version:** 13 — Phase 6 second-review remediation active; CODEX-01…07 complete
+**Version:** 14 — Phase 6 second-review remediation active; CODEX-01…08 complete
 **Last Updated:** 2026-07-27
 **Based on:** `docs/design-document.md` v0.7 and the Mobile Forex Trading App PRS in
 `project-specs/`. Approach fixed by `docs/adr/ADR-0001-approach.md` (web + Playwright emulation);
@@ -182,9 +182,11 @@ below retain the delivery history; there is no outstanding roadmap work.
   `row.evaluate` snapshot before replay. The misleading torn-snapshot wording and two related lint
   suppressions are removed; the focused replay test passes 20 consecutive executions. Review R-5
   (LOW).
-- **CODEX-08 — Add one desktop USD/JPY SELL lifecycle journey.** **READY (LOW):** cover
-  three-decimal formatting, signed P&L, balance, and frozen history without multiplying the mobile
-  device matrix.
+- **CODEX-08 — Add one desktop USD/JPY SELL lifecycle journey.** ✅ **DONE 2026-07-27:** one focused
+  Chromium journey selects USD/JPY and SELL, observes three-decimal prices, closes after a seeded
+  move, and verifies exact signed P&L, balance, and frozen history through the shared pair-aware
+  helpers. The test remains outside `mobile/**`, so it runs once without multiplying the Pixel/iPhone
+  matrix. Review R-6 (LOW).
 - **CODEX-09 — Align the declared Node range with the locked toolchain.** **READY (LOW):** declare
   and document a Vite-compatible Node range while retaining Node 24 in CI.
 - **CODEX-10 — Reconcile current test evidence and the FR-3 money model.** **READY (LOW):** update
@@ -196,8 +198,8 @@ below retain the delivery history; there is no outstanding roadmap work.
 ## Risk Summary
 | Priority | Count | Status |
 |---|---|---|
-| **Total Outstanding** | 3 | 3 LOW Phase 6 items |
-| Resolved | 14 (MF-01…MF-14) + 6 (TRIAGE-01…06) + 7 (CODEX-01…07) | Delivery history plus completed review remediation |
+| **Total Outstanding** | 2 | 2 LOW Phase 6 items |
+| Resolved | 14 (MF-01…MF-14) + 6 (TRIAGE-01…06) + 8 (CODEX-01…08) | Delivery history plus completed review remediation |
 
 ---
 
