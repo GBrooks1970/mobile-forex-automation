@@ -21,6 +21,9 @@ uses [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ### Changed
 
+- Made the deterministic watchlist replay assertion atomic by capturing sequence, price, and
+  direction in one browser evaluation, removing a structurally possible tick-boundary tear
+  (CODEX-07, review R-5).
 - Capped demo orders at 100.00 lots through one safe-integer constant shared by the HTML input,
   parser, and domain validation, with explicit boundary feedback and coverage (CODEX-06, review R-4).
 - Defined the demo's profile-only persistence contract: reload keeps the signed-in identity but

@@ -6,7 +6,7 @@
 
 # Mobile Forex Automation — Backlog
 
-**Version:** 12 — Phase 6 second-review remediation active; CODEX-01…06 complete
+**Version:** 13 — Phase 6 second-review remediation active; CODEX-01…07 complete
 **Last Updated:** 2026-07-27
 **Based on:** `docs/design-document.md` v0.7 and the Mobile Forex Trading App PRS in
 `project-specs/`. Approach fixed by `docs/adr/ADR-0001-approach.md` (web + Playwright emulation);
@@ -177,8 +177,11 @@ below retain the delivery history; there is no outstanding roadmap work.
   domain validation. Boundary coverage accepts the maximum and rejects maximum + 0.01, zero,
   fractional/unsafe integer representations, and malformed input with clear UI feedback. Review R-4
   (MEDIUM).
-- **CODEX-07 — Capture the watchlist replay snapshot atomically.** **READY (LOW):** read sequence,
-  displayed price, and direction in one in-page snapshot and repeat the focused replay test.
+- **CODEX-07 — Capture the watchlist replay snapshot atomically.** ✅ **DONE 2026-07-27:** the
+  deterministic replay test now reads sequence, displayed price, and direction in one in-page
+  `row.evaluate` snapshot before replay. The misleading torn-snapshot wording and two related lint
+  suppressions are removed; the focused replay test passes 20 consecutive executions. Review R-5
+  (LOW).
 - **CODEX-08 — Add one desktop USD/JPY SELL lifecycle journey.** **READY (LOW):** cover
   three-decimal formatting, signed P&L, balance, and frozen history without multiplying the mobile
   device matrix.
@@ -193,8 +196,8 @@ below retain the delivery history; there is no outstanding roadmap work.
 ## Risk Summary
 | Priority | Count | Status |
 |---|---|---|
-| **Total Outstanding** | 4 | 4 LOW Phase 6 items |
-| Resolved | 14 (MF-01…MF-14) + 6 (TRIAGE-01…06) + 6 (CODEX-01…06) | Delivery history plus completed review remediation |
+| **Total Outstanding** | 3 | 3 LOW Phase 6 items |
+| Resolved | 14 (MF-01…MF-14) + 6 (TRIAGE-01…06) + 7 (CODEX-01…07) | Delivery history plus completed review remediation |
 
 ---
 
