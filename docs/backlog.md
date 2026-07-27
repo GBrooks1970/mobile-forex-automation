@@ -6,7 +6,7 @@
 
 # Mobile Forex Automation — Backlog
 
-**Version:** 8 — Phase 6 second-review remediation active; CODEX-01…02 complete
+**Version:** 9 — Phase 6 second-review remediation active; CODEX-01…03 complete
 **Last Updated:** 2026-07-27
 **Based on:** `docs/design-document.md` v0.4 and the Mobile Forex Trading App PRS in
 `project-specs/`. Approach fixed by `docs/adr/ADR-0001-approach.md` (web + Playwright emulation).
@@ -157,8 +157,11 @@ below retain the delivery history; there is no outstanding roadmap work.
   build and verify asset paths but cannot upload or deploy; Pages/OIDC write permissions remain on
   the deploy job only. A workflow-contract test parses the real dependency edges and proves a
   controlled verification failure skips both downstream jobs. Review R-1 (MEDIUM).
-- **CODEX-03 — Make the canonical local E2E gate own its preview server.** **READY (MEDIUM):**
-  disable implicit server reuse for `npm run verify`; keep any interactive reuse explicitly opt-in.
+- **CODEX-03 — Make the canonical local E2E gate own its preview server.** ✅ **DONE 2026-07-27:**
+  `npm run verify` now owns a fresh built-app preview unconditionally; reuse requires the explicit
+  interactive-only `PLAYWRIGHT_REUSE_SERVER=1` flag. A canonical preflight binds an unrelated HTTP
+  responder to port 4173 and passes only when Playwright rejects it rather than silently testing it.
+  README command guidance records the boundary. Review R-2 (MEDIUM).
 - **CODEX-04 — Record the profile-only persistence and reload-reset contract.** **READY (MEDIUM):**
   retain identity persistence while documenting that balance changes, positions, and history reset
   on reload, unless the owner replaces this with an explicitly approved durable-storage design.
@@ -182,8 +185,8 @@ below retain the delivery history; there is no outstanding roadmap work.
 ## Risk Summary
 | Priority | Count | Status |
 |---|---|---|
-| **Total Outstanding** | 8 | 4 MEDIUM + 4 LOW Phase 6 items |
-| Resolved | 14 (MF-01…MF-14) + 6 (TRIAGE-01…06) + 2 (CODEX-01…02) | Delivery history plus completed review remediation |
+| **Total Outstanding** | 7 | 3 MEDIUM + 4 LOW Phase 6 items |
+| Resolved | 14 (MF-01…MF-14) + 6 (TRIAGE-01…06) + 3 (CODEX-01…03) | Delivery history plus completed review remediation |
 
 ---
 

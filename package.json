@@ -13,8 +13,9 @@
     "lint": "eslint . --max-warnings 0",
     "test": "vitest run",
     "test:watch": "vitest",
+    "test:server-ownership": "node scripts/probe-playwright-server-ownership.mjs",
     "test:e2e": "playwright test",
-    "verify": "npm run typecheck && npm run lint && npm run test && npm run test:e2e"
+    "verify": "npm run typecheck && npm run lint && npm run test:server-ownership && npm run test && npm run test:e2e"
   },
   "engines": {
     "node": ">=20"
