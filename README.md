@@ -24,12 +24,12 @@ reload; your profile stays signed in.” See
 
 ## Status
 
-**Phase 4 — complete.** MF-01…MF-14 are merged: the responsive SUT, deterministic domain core,
-desktop/mobile E2E, real Pixel/iPhone breakpoint checks, Screenplay journeys, CI gate, verified
-Pages deployment, registry onboarding, [v1 handover](https://github.com/GBrooks1970/test-automation-portfolio/blob/main/session-notes/mobile-forex-automation_session-notes_v1_20260714T0629Z.md),
-and [portfolio landing card](https://gbrooks1970.github.io/portfolio/) are complete. The current gate
-is green with **90 unit tests + 28 Playwright executions** and the roadmap has zero outstanding
-items. See
+**Delivery and review remediation — complete.** MF-01…MF-14, TRIAGE-01…06, and CODEX-01…10
+cover the responsive SUT, deterministic domain core, desktop/mobile E2E, real Pixel/iPhone
+breakpoint checks, Screenplay journeys, CI gate, verified Pages deployment, registry onboarding,
+[v1 handover](https://github.com/GBrooks1970/test-automation-portfolio/blob/main/session-notes/mobile-forex-automation_session-notes_v1_20260714T0629Z.md),
+and [portfolio landing card](https://gbrooks1970.github.io/portfolio/). The current gate is green
+with **97 unit tests + 31 Playwright executions**, and the backlog has zero outstanding items. See
 [`docs/design-document.md`](docs/design-document.md),
 [`docs/adr/ADR-0001-approach.md`](docs/adr/ADR-0001-approach.md) (approach: web + Playwright
 emulation, "A now, native later"),
@@ -43,9 +43,12 @@ Approach **A** (web + Playwright mobile emulation) — proportionate and CI-clea
 Actions, no device farm), deterministic via the seeded feed. A native layer (Appium/Maestro) is an
 optional later **Phase B** (ADR-0001).
 
+The MVP uses a paper-trading money model: opening an order creates a position without changing cash
+or modelling margin. The cash balance changes only when realised net P&L is applied on close.
+
 ## Test evidence
 
-- **Unit:** 90 Vitest tests covering seeded feed determinism, integer P&L/commission/swap,
+- **Unit:** 97 Vitest tests covering seeded feed determinism, integer P&L/commission/swap,
   validation boundaries, session state, portfolio lifecycle, and responsive layout.
 - **Desktop E2E:** Chromium journeys for login, watchlist ticks, order/close/P&L, history, and live
   responsive reflow.

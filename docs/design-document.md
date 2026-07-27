@@ -1,12 +1,13 @@
 # Mobile Forex Automation — Design Document
 
-**Version:** v0.7
+**Version:** v0.8
 **Date:** 2026-07-08T00:00:00Z
 **Last Updated:** 2026-07-27
 **Author:** Gary Brooks (with Claude Fable 5)
 **Reviewer:** Gary Brooks (approved as-is, 2026-07-08)
-**Status:** Approved and delivered — MF-01…MF-14 complete; roadmap closed. Q1–Q3 are resolved:
-Vite + vanilla TS; Screenplay layer delivered at MF-12; repo name `mobile-forex-automation`.
+**Status:** Approved and delivered — MF-01…MF-14 and both review-remediation cycles complete;
+roadmap closed. Q1–Q3 are resolved: Vite + vanilla TS; Screenplay layer delivered at MF-12; repo
+name `mobile-forex-automation`.
 
 > Adapted from `templates/design-document.template.md`; sections that do not apply to a greenfield
 > test-automation project are marked `N/A — <reason>` per the template's own rule.
@@ -28,8 +29,10 @@ SUT exists only to be tested.
 - Email/password **login** generating a **£10,000 demo profile**.
 - **Watchlist** of the 5 MVP pairs (GBP/USD, EUR/USD, USD/JPY, AUD/USD, USD/CAD) with green/red
   tick-direction flashes, fed by a **deterministic, seedable mock price feed**.
-- **Market order** placement (Buy/Sell, volume in lots) that opens a position and updates balance.
-- **Close position** → compute **P&L** (PRS math) → move to **trade history**.
+- **Market order** placement (Buy/Sell, volume in lots) that opens a position without changing cash;
+  the paper-trading MVP does not model margin.
+- **Close position** → compute **realised net P&L** (PRS math) → update the cash balance → move to
+  **trade history**.
 - **Responsive/adaptive layout** at the PRS breakpoints (mobile portrait < 600, tablet 600–1024,
   desktop split > 1024).
 - **P&L + validation engine** as a pure, unit-tested module (the PRS gives worked examples as oracles).
@@ -108,11 +111,12 @@ exists and is shown. **Must.**
 the row shows the new price and flashes green (up) or red (down) deterministically for the seed. **Must.**
 
 **FR-3 Place market order.** *AC:* Given a pair and a valid lot size, when I Buy/Sell, then an open
-position is created (schema per PRS `open_trades`) and the balance/available margin updates. **Must.**
+position is created (schema per PRS `open_trades`); cash is unchanged and available margin is not
+modelled in this paper-trading MVP. **Must.**
 
 **FR-4 Close position → P&L → history.** *AC:* Given an open position and a seeded exit price, when I
-close it, then gross/net P&L are computed per the PRS math, the balance updates, and an immutable
-`trade_history` row is written. **Must.**
+close it, then gross/net P&L are computed per the PRS math, realised net P&L updates the cash balance,
+and an immutable `trade_history` row is written. **Must.**
 
 **FR-5 Responsive/adaptive layout.** *AC:* Given viewport < 600 px, then single-pane mobile layout;
 given > 1024 px, then the split desktop workspace (watchlist / chart / order panel). **Must.**
@@ -135,8 +139,8 @@ money). **Must.**
 |---|---|---|---|
 | FR-1 | Auth/session | `login.spec.ts`; `session.spec.ts` | Complete |
 | FR-2 | Seeded feed + watchlist/ticker | `watchlist.spec.ts`; `feed.spec.ts`; `ticker.spec.ts` | Complete |
-| FR-3 | Order panel + portfolio | `order.spec.ts`; `portfolio.spec.ts` | Complete |
-| FR-4 | Close/history/P&L | `close.spec.ts`; `portfolio-close.spec.ts`; `pnl.spec.ts` | Complete |
+| FR-3 | Order panel + portfolio (open creates a position; no cash/margin change) | `order.spec.ts`; `portfolio.spec.ts` | Complete |
+| FR-4 | Close/history/P&L (realised net changes cash) | `close.spec.ts`; `portfolio-close.spec.ts`; `pnl.spec.ts` | Complete |
 | FR-5 | Responsive layout | `responsive.spec.ts`; Pixel/iPhone mobile breakpoint specs | Complete |
 | FR-6 | P&L/validation core | PRS oracle, validation, and boundary unit suites | Complete |
 
@@ -241,7 +245,7 @@ is one branch + PR, `/loop`-driven like the hand-baked cycle. Seeded as `docs/ba
 - **MF-03** Mock seeded feed *(Phase 1)*
 - **MF-04** Login + demo profile UI *(Phase 1)*
 - **MF-05** Watchlist + tick flashes *(Phase 1)*
-- **MF-06** Order panel + open position + balance *(Phase 1)*
+- **MF-06** Order panel + open position (paper trading; no cash/margin change on open) *(Phase 1)*
 - **MF-07** Close + P&L + history *(Phase 1)*
 - **MF-08** Responsive/adaptive layout *(Phase 1)*
 - **MF-09** Unit suite vs PRS oracle + boundaries *(Phase 2)*

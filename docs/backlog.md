@@ -6,9 +6,9 @@
 
 # Mobile Forex Automation — Backlog
 
-**Version:** 15 — Phase 6 second-review remediation active; CODEX-01…09 complete
+**Version:** 16 — Phase 6 second-review remediation complete; CODEX-01…10 complete
 **Last Updated:** 2026-07-27
-**Based on:** `docs/design-document.md` v0.7 and the Mobile Forex Trading App PRS in
+**Based on:** `docs/design-document.md` v0.8 and the Mobile Forex Trading App PRS in
 `project-specs/`. Approach fixed by `docs/adr/ADR-0001-approach.md` (web + Playwright emulation);
 state lifetime fixed by `docs/adr/ADR-0002-profile-only-persistence.md`.
 
@@ -191,17 +191,19 @@ below retain the delivery history; there is no outstanding roadmap work.
   `package.json` and its lockfile now declare the shared Vite/ESLint-compatible range
   `^20.19.0 || ^22.13.0 || >=24.0.0`; README recommends the locally exercised Node 20.19 baseline
   and records Node 24 as the unchanged CI baseline. Review R-7 (LOW).
-- **CODEX-10 — Reconcile current test evidence and the FR-3 money model.** **READY (LOW):** update
-  current execution evidence after CODEX-05/08 and state that cash changes only on close; preserve
-  dated historical counts.
+- **CODEX-10 — Reconcile current test evidence and the FR-3 money model.** ✅ **DONE 2026-07-27:**
+  current README evidence now records 97 unit tests and 31 Playwright executions while dated
+  historical counts remain unchanged. README and design FR-3/FR-4 now match the tested paper-trading
+  model: opening creates a position without changing cash or modelling margin; realised net P&L
+  changes the cash balance only on close. Review R-8 (LOW).
 
 ---
 
 ## Risk Summary
 | Priority | Count | Status |
 |---|---|---|
-| **Total Outstanding** | 1 | 1 LOW Phase 6 item |
-| Resolved | 14 (MF-01…MF-14) + 6 (TRIAGE-01…06) + 9 (CODEX-01…09) | Delivery history plus completed review remediation |
+| **Total Outstanding** | 0 | None |
+| Resolved | 14 (MF-01…MF-14) + 6 (TRIAGE-01…06) + 10 (CODEX-01…10) | Delivery history plus completed review remediation |
 
 ---
 
