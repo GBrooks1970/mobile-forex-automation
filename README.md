@@ -47,10 +47,12 @@ optional later **Phase B** (ADR-0001).
   characteristics), using touch input for the full Screenplay trading journey plus real-viewport
   breakpoint and overflow assertions. The E2E lane verifies app-vs-core consistency; correctness is
   pinned by the PRS oracle in the unit lane.
-- **CI:** `npm run verify` on every PR and push to `main`, with Playwright reports retained on
-  failure.
-- **Deployment:** the Vite production artifact is published from `main` by GitHub Pages and the
-  public login → order → price move → close → history → balance journey has been smoke-tested.
+- **CI:** the dependency audit and `npm run verify` run on every PR and push to `main`, with
+  Playwright reports retained on failure. The same exact-SHA job graph then validates the Pages
+  artifact; a failed verification skips both artifact construction and deployment.
+- **Deployment:** successful `main` verification unlocks the least-privilege Pages upload and deploy
+  jobs. PRs validate the production build and asset paths without uploading or deploying. The public
+  login → order → price move → close → history → balance journey has been smoke-tested.
 
 ## Commands
 

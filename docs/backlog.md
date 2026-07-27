@@ -6,7 +6,7 @@
 
 # Mobile Forex Automation — Backlog
 
-**Version:** 7 — Phase 6 second-review remediation active; CODEX-01 complete
+**Version:** 8 — Phase 6 second-review remediation active; CODEX-01…02 complete
 **Last Updated:** 2026-07-27
 **Based on:** `docs/design-document.md` v0.4 and the Mobile Forex Trading App PRS in
 `project-specs/`. Approach fixed by `docs/adr/ADR-0001-approach.md` (web + Playwright emulation).
@@ -151,9 +151,12 @@ below retain the delivery history; there is no outstanding roadmap work.
   to 5.0.8 and `postcss` from 8.5.16 to 8.5.23, clearing GHSA-mh99-v99m-4gvg and
   GHSA-r28c-9q8g-f849; npm also selected the patched `nanoid` 3.3.16. The audit reports 0
   vulnerabilities at HIGH/CRITICAL, and the canonical `npm run verify` gate is green.
-- **CODEX-02 — Gate Pages deployment on successful verification of the exact deployed SHA.**
-  **READY (MEDIUM):** make deployment conditional on audit, typecheck, lint, unit, and E2E success
-  for the published commit while retaining PR artefact validation and deploy-job least privilege.
+- **CODEX-02 — Gate Pages deployment on successful verification of the exact deployed SHA.** ✅
+  **DONE 2026-07-27:** verification, Pages build, and deployment now share one workflow job graph;
+  `pages` needs `verify`, and `deploy` needs the successful Pages job for a `main` push. PRs still
+  build and verify asset paths but cannot upload or deploy; Pages/OIDC write permissions remain on
+  the deploy job only. A workflow-contract test parses the real dependency edges and proves a
+  controlled verification failure skips both downstream jobs. Review R-1 (MEDIUM).
 - **CODEX-03 — Make the canonical local E2E gate own its preview server.** **READY (MEDIUM):**
   disable implicit server reuse for `npm run verify`; keep any interactive reuse explicitly opt-in.
 - **CODEX-04 — Record the profile-only persistence and reload-reset contract.** **READY (MEDIUM):**
@@ -179,8 +182,8 @@ below retain the delivery history; there is no outstanding roadmap work.
 ## Risk Summary
 | Priority | Count | Status |
 |---|---|---|
-| **Total Outstanding** | 9 | 5 MEDIUM + 4 LOW Phase 6 items |
-| Resolved | 14 (MF-01…MF-14) + 6 (TRIAGE-01…06) + 1 (CODEX-01) | Delivery history plus completed review remediation |
+| **Total Outstanding** | 8 | 4 MEDIUM + 4 LOW Phase 6 items |
+| Resolved | 14 (MF-01…MF-14) + 6 (TRIAGE-01…06) + 2 (CODEX-01…02) | Delivery history plus completed review remediation |
 
 ---
 

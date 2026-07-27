@@ -18,6 +18,9 @@ uses [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ### Changed
 
+- Gated Pages artifact construction and deployment behind the exact commit's successful dependency
+  audit, typecheck, lint, unit, and E2E jobs while retaining non-deploying PR build validation
+  (CODEX-02, review R-1).
 - Published the repository for portfolio review.
 - Reconciled project status and traceability after completion of MF-12.
 - Closed MF-13 after the first `main` deployment and public trading-journey smoke test passed.
