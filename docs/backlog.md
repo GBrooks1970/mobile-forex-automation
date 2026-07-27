@@ -6,15 +6,16 @@
 
 # Mobile Forex Automation — Backlog
 
-**Version:** 6 — MF-01…MF-14 and TRIAGE-01…06 complete; roadmap closed
-**Last Updated:** 2026-07-19
+**Version:** 7 — Phase 6 second-review remediation active; CODEX-01 complete
+**Last Updated:** 2026-07-27
 **Based on:** `docs/design-document.md` v0.4 and the Mobile Forex Trading App PRS in
 `project-specs/`. Approach fixed by `docs/adr/ADR-0001-approach.md` (web + Playwright emulation).
 
 This backlog is the project's **source of truth** for item status. The vertical slice + automation
 are broken into MF-01…MF-14, ordered by phase (build the SUT → automate → ship); TRIAGE-01…06 are
-the follow-on code-review remediation cycle. All items are complete; registry onboarding, the first
-handover, and the public landing card are all merged and verified.
+the first code-review remediation cycle. Phase 6 tracks the bounded follow-on work derived from the
+merged Codex review v1. Registry onboarding, the first handover, and the public landing card remain
+merged and verified.
 
 **Priority Scoring System:**
 - **Score = Value (0–10) + Breakage/Blocking (0–10) + Effort-inverse/Enablement (0–10)**
@@ -143,13 +144,43 @@ below retain the delivery history; there is no outstanding roadmap work.
   (LOW, 4 of 5 sub-items — the "newer tool majors available" sub-item was dropped as non-actionable
   at triage time). **Phase 5 complete — review worklist 6/6.**
 
+### Phase 6 — Codex review v1 remediation (`.review/CODE_REVIEW_CODEX_v1_20260724T0026Z/`)
+
+- **CODEX-01 — Restore the dependency-audit gate after PR #25.** ✅ **DONE 2026-07-27:** refreshed
+  the lockfile without a forced or breaking upgrade. Transitive `brace-expansion` moved from 5.0.7
+  to 5.0.8 and `postcss` from 8.5.16 to 8.5.23, clearing GHSA-mh99-v99m-4gvg and
+  GHSA-r28c-9q8g-f849; npm also selected the patched `nanoid` 3.3.16. The audit reports 0
+  vulnerabilities at HIGH/CRITICAL, and the canonical `npm run verify` gate is green.
+- **CODEX-02 — Gate Pages deployment on successful verification of the exact deployed SHA.**
+  **READY (MEDIUM):** make deployment conditional on audit, typecheck, lint, unit, and E2E success
+  for the published commit while retaining PR artefact validation and deploy-job least privilege.
+- **CODEX-03 — Make the canonical local E2E gate own its preview server.** **READY (MEDIUM):**
+  disable implicit server reuse for `npm run verify`; keep any interactive reuse explicitly opt-in.
+- **CODEX-04 — Record the profile-only persistence and reload-reset contract.** **READY (MEDIUM):**
+  retain identity persistence while documenting that balance changes, positions, and history reset
+  on reload, unless the owner replaces this with an explicitly approved durable-storage design.
+- **CODEX-05 — Surface and test the approved reload-reset behaviour.** **READY (MEDIUM):** add a
+  deterministic desktop journey and a concise UI cue for the CODEX-04 contract.
+- **CODEX-06 — Enforce a safe business maximum for lot input.** **READY (MEDIUM):** use one
+  documented limit across HTML, parsing, and domain validation with safe-integer boundary tests.
+- **CODEX-07 — Capture the watchlist replay snapshot atomically.** **READY (LOW):** read sequence,
+  displayed price, and direction in one in-page snapshot and repeat the focused replay test.
+- **CODEX-08 — Add one desktop USD/JPY SELL lifecycle journey.** **READY (LOW):** cover
+  three-decimal formatting, signed P&L, balance, and frozen history without multiplying the mobile
+  device matrix.
+- **CODEX-09 — Align the declared Node range with the locked toolchain.** **READY (LOW):** declare
+  and document a Vite-compatible Node range while retaining Node 24 in CI.
+- **CODEX-10 — Reconcile current test evidence and the FR-3 money model.** **READY (LOW):** update
+  current execution evidence after CODEX-05/08 and state that cash changes only on close; preserve
+  dated historical counts.
+
 ---
 
 ## Risk Summary
 | Priority | Count | Status |
 |---|---|---|
-| **Total Outstanding** | 0 | Roadmap complete |
-| Resolved | 14 (MF-01…MF-14) + 6 (TRIAGE-01…06) | Build + automation + public demo + portfolio onboarding + review remediation complete |
+| **Total Outstanding** | 9 | 5 MEDIUM + 4 LOW Phase 6 items |
+| Resolved | 14 (MF-01…MF-14) + 6 (TRIAGE-01…06) + 1 (CODEX-01) | Delivery history plus completed review remediation |
 
 ---
 
