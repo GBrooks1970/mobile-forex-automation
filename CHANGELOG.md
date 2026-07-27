@@ -24,6 +24,9 @@ uses [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ### Changed
 
+- Reconciled current test evidence at 97 unit tests and 31 Playwright executions, and corrected the
+  FR-3/FR-4 contract to state that opening does not change cash or model margin while realised net
+  P&L changes cash only on close (CODEX-10, review R-8).
 - Aligned the declared Node engine range with the locked Vite and ESLint toolchain, documenting
   Node 20 from 20.19 onwards locally while retaining Node 24 in CI (CODEX-09, review R-7).
 - Made the deterministic watchlist replay assertion atomic by capturing sequence, price, and
