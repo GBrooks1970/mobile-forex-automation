@@ -1,8 +1,8 @@
 # Mobile Forex Automation — Design Document
 
-**Version:** v0.4
+**Version:** v0.5
 **Date:** 2026-07-08T00:00:00Z
-**Last Updated:** 2026-07-14
+**Last Updated:** 2026-07-27
 **Author:** Gary Brooks (with Claude Fable 5)
 **Reviewer:** Gary Brooks (approved as-is, 2026-07-08)
 **Status:** Approved and delivered — MF-01…MF-14 complete; roadmap closed. Q1–Q3 are resolved:
@@ -50,6 +50,8 @@ SUT exists only to be tested.
 4. **Pure P&L/validation core** decoupled from UI, unit-tested against the PRS's worked examples.
 5. **Screenplay layer for the mobile E2E**, delivered at MF-12; geometry-heavy breakpoint checks
    remain plain Playwright by design.
+6. **Profile-only persistence** — the signed-in identity survives reload, while trading balance
+   changes, open positions, and history are deliberately page-lifetime state — ADR-0002.
 
 ### Success Criteria
 - [x] The MVP slice runs deterministically in a headless browser with a seeded feed.
@@ -171,7 +173,7 @@ isolation. The **UI** is a thin responsive shell. The **mock feed** is determini
 | Layer | Technology | Justification |
 |---|---|---|
 | SUT build | Vite + TypeScript | fast, static-deployable to Pages, matches portfolio TS norm |
-| Storage | in-memory + `localStorage` | no backend; deterministic; resettable (PRS demo-reset) |
+| Storage | in-memory portfolio + profile-only `localStorage` | identity persists; trading activity resets on reload (ADR-0002) |
 | Unit | Vitest | portfolio standard (hand-baked, markdown-renderer, calculator) |
 | E2E | Playwright device emulation | mobile-web without a device farm; portfolio standard |
 | CI | GitHub Actions (Node 24) | portfolio baseline |
@@ -209,7 +211,17 @@ JPY/CAD quotes. Acceptable for a demo SUT; refine per-quote if it ever matters.
 Per PRS §"open_trades" / "trade_history" — `trade_id`, `currency_pair`, `trade_direction`,
 `volume_lots`, `entry_price`, `exit_price`, `close_reason`, `gross_pnl`, `net_pnl`, timestamps.
 
-### 5.5 API / algorithm
+### 5.5 Persistence boundary
+`localStorage` retains the demo profile so a reload keeps the same signed-in `userId` and email. Its
+`balancePence` is the fixed £10,000 seed used to construct a new in-memory `Portfolio`; it is not a
+durable account balance. Balance changes, open positions, and closed-trade history live only in that
+page's `Portfolio` and reset when the page reloads. Signing out clears the stored profile.
+
+The UI must state this boundary concisely: **“Demo activity resets on reload; your profile stays
+signed in.”** This is an intentional demo contract, not durable account-history behaviour. ADR-0002
+records the decision; CODEX-05 adds the cue and an E2E contract test.
+
+### 5.6 API / algorithm
 N/A — no server API (local slice). The only non-trivial algorithm is the P&L math (§5.1), specified
 with worked examples in the PRS.
 
@@ -272,6 +284,9 @@ N/A — new project.
 
 Decision recorded in **ADR-0001**; "A now, native later" per the user (2026-07-08).
 
+For state lifetime, durable account storage was considered but rejected as disproportionate for the
+demo slice. **ADR-0002** records the approved profile-only persistence and reload-reset contract.
+
 ## 11. Resolved Design Questions
 - **Q1 (design):** resolved to Vite + vanilla TypeScript, keeping the SUT small and the core
   framework-free.
@@ -295,3 +310,4 @@ financing; *SUT* — system under test. **References:** the forex PRS
 | v0.2 | 2026-07-13 | Gary Brooks + Codex | Reconciled implementation status after MF-12; traceability complete; Phase 4 remains |
 | v0.3 | 2026-07-14 | Gary Brooks + Codex | Recorded verified Pages deployment; MF-13 complete; MF-14 remains |
 | v0.4 | 2026-07-14 | Gary Brooks + Codex | Recorded registry, handover, and deployed landing card; MF-14 and roadmap complete |
+| v0.5 | 2026-07-27 | Gary Brooks + Codex | Approved and documented profile-only persistence; trading state resets on reload (ADR-0002) |

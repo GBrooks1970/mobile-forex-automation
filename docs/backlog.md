@@ -6,10 +6,11 @@
 
 # Mobile Forex Automation — Backlog
 
-**Version:** 9 — Phase 6 second-review remediation active; CODEX-01…03 complete
+**Version:** 10 — Phase 6 second-review remediation active; CODEX-01…04 complete
 **Last Updated:** 2026-07-27
-**Based on:** `docs/design-document.md` v0.4 and the Mobile Forex Trading App PRS in
-`project-specs/`. Approach fixed by `docs/adr/ADR-0001-approach.md` (web + Playwright emulation).
+**Based on:** `docs/design-document.md` v0.5 and the Mobile Forex Trading App PRS in
+`project-specs/`. Approach fixed by `docs/adr/ADR-0001-approach.md` (web + Playwright emulation);
+state lifetime fixed by `docs/adr/ADR-0002-profile-only-persistence.md`.
 
 This backlog is the project's **source of truth** for item status. The vertical slice + automation
 are broken into MF-01…MF-14, ordered by phase (build the SUT → automate → ship); TRIAGE-01…06 are
@@ -162,9 +163,11 @@ below retain the delivery history; there is no outstanding roadmap work.
   interactive-only `PLAYWRIGHT_REUSE_SERVER=1` flag. A canonical preflight binds an unrelated HTTP
   responder to port 4173 and passes only when Playwright rejects it rather than silently testing it.
   README command guidance records the boundary. Review R-2 (MEDIUM).
-- **CODEX-04 — Record the profile-only persistence and reload-reset contract.** **READY (MEDIUM):**
-  retain identity persistence while documenting that balance changes, positions, and history reset
-  on reload, unless the owner replaces this with an explicitly approved durable-storage design.
+- **CODEX-04 — Record the profile-only persistence and reload-reset contract.** ✅ **DONE
+  2026-07-27:** owner-approved ADR-0002 retains the signed-in identity while explicitly defining
+  balance changes, open positions, and history as page-lifetime state that resets on reload. README
+  and design wording distinguish profile persistence from durable account history and prescribe the
+  concise cue that CODEX-05 will surface and test. Review R-3 (MEDIUM).
 - **CODEX-05 — Surface and test the approved reload-reset behaviour.** **READY (MEDIUM):** add a
   deterministic desktop journey and a concise UI cue for the CODEX-04 contract.
 - **CODEX-06 — Enforce a safe business maximum for lot input.** **READY (MEDIUM):** use one
@@ -185,8 +188,8 @@ below retain the delivery history; there is no outstanding roadmap work.
 ## Risk Summary
 | Priority | Count | Status |
 |---|---|---|
-| **Total Outstanding** | 7 | 3 MEDIUM + 4 LOW Phase 6 items |
-| Resolved | 14 (MF-01…MF-14) + 6 (TRIAGE-01…06) + 3 (CODEX-01…03) | Delivery history plus completed review remediation |
+| **Total Outstanding** | 6 | 2 MEDIUM + 4 LOW Phase 6 items |
+| Resolved | 14 (MF-01…MF-14) + 6 (TRIAGE-01…06) + 4 (CODEX-01…04) | Delivery history plus completed review remediation |
 
 ---
 
