@@ -1,6 +1,6 @@
 # Mobile Forex Automation — Design Document
 
-**Version:** v0.5
+**Version:** v0.6
 **Date:** 2026-07-08T00:00:00Z
 **Last Updated:** 2026-07-27
 **Author:** Gary Brooks (with Claude Fable 5)
@@ -217,9 +217,9 @@ Per PRS §"open_trades" / "trade_history" — `trade_id`, `currency_pair`, `trad
 durable account balance. Balance changes, open positions, and closed-trade history live only in that
 page's `Portfolio` and reset when the page reloads. Signing out clears the stored profile.
 
-The UI must state this boundary concisely: **“Demo activity resets on reload; your profile stays
-signed in.”** This is an intentional demo contract, not durable account-history behaviour. ADR-0002
-records the decision; CODEX-05 adds the cue and an E2E contract test.
+The trading shell states this boundary concisely: **“Demo activity resets on reload; your profile
+stays signed in.”** This is an intentional demo contract, not durable account-history behaviour.
+ADR-0002 records the decision; CODEX-05 pins the cue and reset behaviour with an E2E contract test.
 
 ### 5.6 API / algorithm
 N/A — no server API (local slice). The only non-trivial algorithm is the P&L math (§5.1), specified
@@ -311,3 +311,4 @@ financing; *SUT* — system under test. **References:** the forex PRS
 | v0.3 | 2026-07-14 | Gary Brooks + Codex | Recorded verified Pages deployment; MF-13 complete; MF-14 remains |
 | v0.4 | 2026-07-14 | Gary Brooks + Codex | Recorded registry, handover, and deployed landing card; MF-14 and roadmap complete |
 | v0.5 | 2026-07-27 | Gary Brooks + Codex | Approved and documented profile-only persistence; trading state resets on reload (ADR-0002) |
+| v0.6 | 2026-07-27 | Gary Brooks + Codex | Surfaced the reload-reset cue and added deterministic browser coverage of the contract |

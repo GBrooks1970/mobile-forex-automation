@@ -42,8 +42,8 @@ Retain **profile-only persistence**:
 
 - A reload restores the trading shell for the same profile with £10,000, no positions, and no
   history, even if the prior page had realised profit or loss.
-- CODEX-05 must surface the approved copy in the trading UI and add a deterministic E2E journey that
-  proves both sides of the contract.
+- CODEX-05 surfaces the approved copy in the trading UI; its deterministic E2E journey proves both
+  sides of the contract.
 - Any future move to durable trading state requires a separate design decision covering schema,
   validation, migrations, corruption handling, and tests; it must not emerge accidentally from the
   profile payload.

@@ -123,6 +123,9 @@ function renderShell(profile: Profile): void {
       </div>
     </header>
     <div data-testid="trading-shell" data-seed="${feed.seed}">
+      <p class="demo-reset-hint" data-testid="demo-reset-hint">
+        Demo activity resets on reload; your profile stays signed in.
+      </p>
       <div class="workspace" data-testid="workspace">
         <div class="col-watch" data-testid="col-watch">
           ${renderWatchlist(feed)}
