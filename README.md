@@ -60,8 +60,13 @@ optional later **Phase B** (ADR-0001).
 npm install
 npx playwright install chromium   # once, for the e2e lane
 npm run dev      # SUT dev server
-npm run verify   # typecheck + unit (Vitest) + e2e (Playwright against the built app)
+npm run verify   # typecheck + lint + server-ownership probe + unit + built-app e2e
 ```
+
+The canonical E2E gate owns port `4173` and refuses to reuse any responder already listening there,
+so its evidence always comes from the freshly built current checkout. Interactive reuse is separate
+and explicitly opt-in: start the intended preview yourself, then set
+`PLAYWRIGHT_REUSE_SERVER=1` only for that `npm run test:e2e` invocation.
 
 ## Licence
 

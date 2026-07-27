@@ -18,6 +18,9 @@ uses [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ### Changed
 
+- Made the canonical Playwright gate own a fresh built-app preview server; pre-existing server reuse
+  now requires the explicit interactive-only `PLAYWRIGHT_REUSE_SERVER=1` opt-in (CODEX-03,
+  review R-2).
 - Gated Pages artifact construction and deployment behind the exact commit's successful dependency
   audit, typecheck, lint, unit, and E2E jobs while retaining non-deploying PR build validation
   (CODEX-02, review R-1).

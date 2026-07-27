@@ -37,7 +37,8 @@ export default defineConfig({
     // Serve the built app: deterministic, no HMR, same artefact Pages will host.
     command: 'npm run build && npm run preview',
     url: 'http://localhost:4173',
-    reuseExistingServer: !process.env.CI,
+    // The canonical gate owns a fresh server. Reuse is an explicit interactive-only opt-in.
+    reuseExistingServer: process.env.PLAYWRIGHT_REUSE_SERVER === '1',
     timeout: 120_000,
   },
 });
