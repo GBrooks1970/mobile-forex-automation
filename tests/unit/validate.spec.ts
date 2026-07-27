@@ -1,4 +1,5 @@
 import { describe, expect, it } from 'vitest';
+import { MAX_VOLUME_LOTS2 } from '../../src/core/types.js';
 import { validateClose, validateOpen, type OpenOrderInput } from '../../src/core/validate.js';
 
 const validBuy: OpenOrderInput = {
@@ -26,6 +27,19 @@ describe('validateOpen (PRS integrity rules)', () => {
   it('rejects zero and negative volume', () => {
     expect(rules(validateOpen({ ...validBuy, volumeLots2: 0 }))).toContain('volume-positive');
     expect(rules(validateOpen({ ...validBuy, volumeLots2: -10 }))).toContain('volume-positive');
+  });
+
+  it('accepts the maximum and rejects larger or inexact integer representations', () => {
+    expect(validateOpen({ ...validBuy, volumeLots2: MAX_VOLUME_LOTS2 })).toEqual([]);
+    expect(rules(validateOpen({ ...validBuy, volumeLots2: MAX_VOLUME_LOTS2 + 1 }))).toContain(
+      'volume-maximum',
+    );
+    expect(
+      rules(validateOpen({ ...validBuy, volumeLots2: Number.MAX_SAFE_INTEGER + 1 })),
+    ).toContain('volume-safe-integer');
+    expect(rules(validateOpen({ ...validBuy, volumeLots2: 1.5 }))).toContain(
+      'volume-safe-integer',
+    );
   });
 
   it('rejects an unknown pair', () => {

@@ -21,6 +21,8 @@ uses [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ### Changed
 
+- Capped demo orders at 100.00 lots through one safe-integer constant shared by the HTML input,
+  parser, and domain validation, with explicit boundary feedback and coverage (CODEX-06, review R-4).
 - Defined the demo's profile-only persistence contract: reload keeps the signed-in identity but
   resets trading balance changes, open positions, and history; ADR-0002 and the product-copy
   contract make clear that the app does not provide durable account history (CODEX-04, review R-3).

@@ -2,7 +2,7 @@
 // as pure predicates. Each returns a list of violations (empty = valid), so the
 // UI and the tests share one source of truth for what is legal.
 
-import { MVP_PAIRS, type OpenTrade, type TradeDirection } from './types.js';
+import { MAX_VOLUME_LOTS2, MVP_PAIRS, type OpenTrade, type TradeDirection } from './types.js';
 
 export interface Violation {
   rule: string;
@@ -29,10 +29,20 @@ export function validateOpen(input: OpenOrderInput): Violation[] {
     });
   }
 
-  if (!Number.isInteger(input.volumeLots2) || input.volumeLots2 <= 0) {
+  if (!Number.isSafeInteger(input.volumeLots2)) {
+    violations.push({
+      rule: 'volume-safe-integer',
+      message: 'volume_lots must be an exact whole number of lot hundredths',
+    });
+  } else if (input.volumeLots2 <= 0) {
     violations.push({
       rule: 'volume-positive',
       message: 'volume_lots must be greater than zero',
+    });
+  } else if (input.volumeLots2 > MAX_VOLUME_LOTS2) {
+    violations.push({
+      rule: 'volume-maximum',
+      message: `volume_lots must not exceed ${(MAX_VOLUME_LOTS2 / 100).toFixed(2)} lots`,
     });
   }
 

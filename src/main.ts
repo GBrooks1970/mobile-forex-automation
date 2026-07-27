@@ -11,7 +11,7 @@ import { Portfolio } from './app/portfolio.js';
 import { startTicker, type TickerHandle } from './app/ticker.js';
 import { createFeed, parseSeed } from './core/feed.js';
 import { formatGbpPence } from './core/format.js';
-import { MVP_PAIRS, type CurrencyPair, type TradeDirection } from './core/types.js';
+import { MAX_VOLUME_LOTS2, MVP_PAIRS, type CurrencyPair, type TradeDirection } from './core/types.js';
 import { applyTicks, renderWatchlist } from './ui/watchlist.js';
 import { parseLots2, renderOrderPanel } from './ui/orderPanel.js';
 import { renderPositions, updatePositions } from './ui/positions.js';
@@ -188,8 +188,8 @@ function placeOrder(active: Portfolio, direction: TradeDirection): void {
     return;
   }
   const lots2 = parseLots2(volInput.value);
-  if (lots2 === null || lots2 <= 0) {
-    errors.textContent = 'Enter a volume greater than 0 (e.g. 0.10)';
+  if (lots2 === null) {
+    errors.textContent = `Enter a volume from 0.01 to ${(MAX_VOLUME_LOTS2 / 100).toFixed(2)} lots`;
     return;
   }
 

@@ -1,6 +1,6 @@
 # Mobile Forex Automation — Design Document
 
-**Version:** v0.6
+**Version:** v0.7
 **Date:** 2026-07-08T00:00:00Z
 **Last Updated:** 2026-07-27
 **Author:** Gary Brooks (with Claude Fable 5)
@@ -119,7 +119,8 @@ given > 1024 px, then the split desktop workspace (watchlist / chart / order pan
 
 **FR-6 P&L + validation engine.** *AC:* pip difference, gross P&L (with GBP conversion), commission,
 and swap (incl. triple-Wednesday) match the PRS formulas; validation rules enforced (`volume_lots >
-0`; BUY → `TP > entry > SL`, SELL inverse; `closed_at ≥ opened_at`; no float money). **Must.**
+0` and `≤ 100.00`; BUY → `TP > entry > SL`, SELL inverse; `closed_at ≥ opened_at`; no float
+money). **Must.**
 
 ### Non-Functional Requirements
 - **NFR-1 Determinism.** Identical seed ⇒ identical tick sequence, prices, and P&L. No wall-clock or
@@ -193,6 +194,10 @@ The heart of the project's testability. Functions mirror the PRS pseudocode:
 - `grossPnlGbp(...)`, `commission(...)`, `swap(nightsHeld, crossedWednesday, ...)`, `netPnl(...)`.
 - `validateOpen(order)` / `validateClose(...)` — the PRS integrity rules.
 - Money as **integer micro-units** internally; formatting only at the edge.
+- `MAX_VOLUME_LOTS2 = 10_000` sets the demo business ceiling at 100.00 lots. The HTML input,
+  `parseLots2`, and `validateOpen` share that constant; accepted volumes are positive safe integers.
+  This deliberately tighter bound than the PRS storage shape preserves exact arithmetic and gives
+  the local demo a clear, testable risk limit.
 
 ### 5.2 Trade state
 `open_trades` and `trade_history` shapes exactly per the PRS DDL (constraints become validation).
@@ -312,3 +317,4 @@ financing; *SUT* — system under test. **References:** the forex PRS
 | v0.4 | 2026-07-14 | Gary Brooks + Codex | Recorded registry, handover, and deployed landing card; MF-14 and roadmap complete |
 | v0.5 | 2026-07-27 | Gary Brooks + Codex | Approved and documented profile-only persistence; trading state resets on reload (ADR-0002) |
 | v0.6 | 2026-07-27 | Gary Brooks + Codex | Surfaced the reload-reset cue and added deterministic browser coverage of the contract |
+| v0.7 | 2026-07-27 | Gary Brooks + Codex | Set and enforced the 100.00-lot safe-integer business boundary across UI, parser, and domain |
