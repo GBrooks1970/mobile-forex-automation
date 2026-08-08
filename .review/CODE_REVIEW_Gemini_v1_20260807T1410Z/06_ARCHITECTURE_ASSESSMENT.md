@@ -1,8 +1,8 @@
 # Architecture Assessment
 
-[<- Back to Index](00_CODE_REVIEW_CLAUDE_v1_20260807T1410Z.md) | [Next: Migration Plans ->](07_MIGRATION_PLANS.md)
+[<- Back to Index](00_CODE_REVIEW_Gemini_v1_20260807T1410Z.md) | [Next: Migration Plans ->](07_MIGRATION_PLANS.md)
 
-**Reviewer:** AI assistant (Claude)
+**Reviewer:** AI assistant (Gemini)
 
 ## Test Pyramid
 - **Unit Tests (Base):** 97 Vitest unit tests validate core business logic, P&L mathematics, swap/commission rules, input validation, and seeded feed determinism fast and in isolation.
@@ -35,7 +35,7 @@
 
 ---
 
-[<- Previous: Recommendations](05_RECOMMENDATIONS.md) | [Back to Index](00_CODE_REVIEW_CLAUDE_v1_20260807T1410Z.md) | [Next: Migration Plans ->](07_MIGRATION_PLANS.md)
+[<- Previous: Recommendations](05_RECOMMENDATIONS.md) | [Back to Index](00_CODE_REVIEW_Gemini_v1_20260807T1410Z.md) | [Next: Migration Plans ->](07_MIGRATION_PLANS.md)
 ```
 
 ---

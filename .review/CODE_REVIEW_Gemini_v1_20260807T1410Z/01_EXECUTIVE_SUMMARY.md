@@ -1,8 +1,8 @@
 # Executive Summary
 
-[<- Back to Index](00_CODE_REVIEW_CLAUDE_v1_20260807T1410Z.md) | [Next: Risks and Issues ->](02_RISKS_AND_ISSUES.md)
+[<- Back to Index](00_CODE_REVIEW_Gemini_v1_20260807T1410Z.md) | [Next: Risks and Issues ->](02_RISKS_AND_ISSUES.md)
 
-**Reviewer:** AI assistant (Claude)
+**Reviewer:** AI assistant (Gemini)
 
 ## Design Quality
 
@@ -31,7 +31,7 @@
 
 ---
 
-[<- Back to Index](00_CODE_REVIEW_CLAUDE_v1_20260807T1410Z.md) | [Next: Risks and Issues ->](02_RISKS_AND_ISSUES.md)
+[<- Back to Index](00_CODE_REVIEW_Gemini_v1_20260807T1410Z.md) | [Next: Risks and Issues ->](02_RISKS_AND_ISSUES.md)
 ```
 
 ---

@@ -1,8 +1,8 @@
 # Cross-Cutting Analysis
 
-[<- Back to Index](00_CODE_REVIEW_CLAUDE_v1_20260807T1410Z.md) | [Next: Recommendations ->](05_RECOMMENDATIONS.md)
+[<- Back to Index](00_CODE_REVIEW_Gemini_v1_20260807T1410Z.md) | [Next: Recommendations ->](05_RECOMMENDATIONS.md)
 
-**Reviewer:** AI assistant (Claude)
+**Reviewer:** AI assistant (Gemini)
 
 *Note: As a single-repository review, cross-cutting analysis focuses on integration consistency across application layers, test frameworks, CI pipelines, and documentation within `mobile-forex-automation`.*
 
@@ -38,7 +38,7 @@
 
 ---
 
-[<- Previous: Project Review](03_PROJECT_REVIEWS/PROJECT_001_mobile-forex-automation.md) | [Back to Index](00_CODE_REVIEW_CLAUDE_v1_20260807T1410Z.md) | [Next: Recommendations ->](05_RECOMMENDATIONS.md)
+[<- Previous: Project Review](03_PROJECT_REVIEWS/PROJECT_001_mobile-forex-automation.md) | [Back to Index](00_CODE_REVIEW_Gemini_v1_20260807T1410Z.md) | [Next: Recommendations ->](05_RECOMMENDATIONS.md)
 ```
 
 ---

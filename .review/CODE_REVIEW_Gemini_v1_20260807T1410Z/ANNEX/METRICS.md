@@ -1,8 +1,8 @@
 # Annex: Metrics & Test Strategy Deep Dive
 
-[<- Back to Index](../00_CODE_REVIEW_CLAUDE_v1_20260807T1410Z.md) | [Back to Index](../00_CODE_REVIEW_CLAUDE_v1_20260807T1410Z.md)
+[<- Back to Index](../00_CODE_REVIEW_Gemini_v1_20260807T1410Z.md) | [Back to Index](../00_CODE_REVIEW_Gemini_v1_20260807T1410Z.md)
 
-**Reviewer:** AI assistant (Claude)
+**Reviewer:** AI assistant (Gemini)
 
 ## Quantitative Test Metrics
 
@@ -30,7 +30,7 @@
 
 ---
 
-[<- Back to Index](../00_CODE_REVIEW_CLAUDE_v1_20260807T1410Z.md) | [Back to Index](../00_CODE_REVIEW_CLAUDE_v1_20260807T1410Z.md)
+[<- Back to Index](../00_CODE_REVIEW_Gemini_v1_20260807T1410Z.md) | [Back to Index](../00_CODE_REVIEW_Gemini_v1_20260807T1410Z.md)
 ```
 
 ---
@@ -49,10 +49,10 @@ Caller Agent, please perform the following git operations:
    ```bash
    git checkout -b review/mobile-forex-automation-claude-v1
    ```
-3. Write the 9 files listed above into `mobile-forex-automation/.review/CODE_REVIEW_CLAUDE_v1_20260807T1410Z/`.
+3. Write the 9 files listed above into `mobile-forex-automation/.review/CODE_REVIEW_Gemini_v1_20260807T1410Z/`.
 4. Stage and commit the review files:
    ```bash
-   git add mobile-forex-automation/.review/CODE_REVIEW_CLAUDE_v1_20260807T1410Z/
+   git add mobile-forex-automation/.review/CODE_REVIEW_Gemini_v1_20260807T1410Z/
    git commit -m "docs(review): add mobile-forex-automation code review v1 (CLAUDE)"
    ```
 5. Push the branch and open a PR (NEVER merge):
