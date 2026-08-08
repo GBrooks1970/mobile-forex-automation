@@ -1,8 +1,8 @@
 # Project Review: mobile-forex-automation
 
-[<- Back to Index](../00_CODE_REVIEW_CLAUDE_v1_20260807T1410Z.md) | [Next: Cross-Project Analysis ->](../04_CROSS_PROJECT_ANALYSIS.md)
+[<- Back to Index](../00_CODE_REVIEW_Gemini_v1_20260807T1410Z.md) | [Next: Cross-Project Analysis ->](../04_CROSS_PROJECT_ANALYSIS.md)
 
-**Reviewer:** AI assistant (Claude)
+**Reviewer:** AI assistant (Gemini)
 
 ## Overview & Key Evaluation Points
 
@@ -21,7 +21,7 @@
 
 ---
 
-[<- Previous: Risks and Issues](../02_RISKS_AND_ISSUES.md) | [Back to Index](../00_CODE_REVIEW_CLAUDE_v1_20260807T1410Z.md) | [Next: Cross-Project Analysis ->](../04_CROSS_PROJECT_ANALYSIS.md)
+[<- Previous: Risks and Issues](../02_RISKS_AND_ISSUES.md) | [Back to Index](../00_CODE_REVIEW_Gemini_v1_20260807T1410Z.md) | [Next: Cross-Project Analysis ->](../04_CROSS_PROJECT_ANALYSIS.md)
 ```
 
 ---

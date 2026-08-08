@@ -1,8 +1,8 @@
 # Migration Strategy and Plans
 
-[<- Back to Index](00_CODE_REVIEW_CLAUDE_v1_20260807T1410Z.md) | [Next: Annex Metrics ->](ANNEX/METRICS.md)
+[<- Back to Index](00_CODE_REVIEW_Gemini_v1_20260807T1410Z.md) | [Next: Annex Metrics ->](ANNEX/METRICS.md)
 
-**Reviewer:** AI assistant (Claude)
+**Reviewer:** AI assistant (Gemini)
 
 ## 1. Single Source of Truth for Features & Domain Rules
 
@@ -33,7 +33,7 @@
 
 ---
 
-[<- Previous: Architecture Assessment](06_ARCHITECTURE_ASSESSMENT.md) | [Back to Index](00_CODE_REVIEW_CLAUDE_v1_20260807T1410Z.md) | [Next: Annex Metrics ->](ANNEX/METRICS.md)
+[<- Previous: Architecture Assessment](06_ARCHITECTURE_ASSESSMENT.md) | [Back to Index](00_CODE_REVIEW_Gemini_v1_20260807T1410Z.md) | [Next: Annex Metrics ->](ANNEX/METRICS.md)
 ```
 
 ---

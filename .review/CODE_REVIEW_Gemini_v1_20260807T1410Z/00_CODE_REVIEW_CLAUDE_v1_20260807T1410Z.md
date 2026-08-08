@@ -1,6 +1,6 @@
 # Code Review: Mobile Forex Automation
 
-**Reviewer:** AI assistant (Claude)  
+**Reviewer:** AI assistant (Gemini)  
 **Date:** 2026-08-07T14:10Z  
 **Scope:** Full codebase review (`src/`, `tests/`, `.github/workflows/`, configuration, documentation)  
 

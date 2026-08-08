@@ -1,8 +1,8 @@
 # Risks and Issues
 
-[<- Back to Index](00_CODE_REVIEW_CLAUDE_v1_20260807T1410Z.md) | [Next: Project Review ->](03_PROJECT_REVIEWS/PROJECT_001_mobile-forex-automation.md)
+[<- Back to Index](00_CODE_REVIEW_Gemini_v1_20260807T1410Z.md) | [Next: Project Review ->](03_PROJECT_REVIEWS/PROJECT_001_mobile-forex-automation.md)
 
-**Reviewer:** AI assistant (Claude)
+**Reviewer:** AI assistant (Gemini)
 
 Risks are ranked high to low priority. No HIGH or MEDIUM risks were identified; the repository exhibits high structural reliability and complete review remediation. The five LOW findings represent incremental maintenance and quality enhancements.
 
@@ -68,7 +68,7 @@ Risks are ranked high to low priority. No HIGH or MEDIUM risks were identified; 
 
 ---
 
-[<- Previous: Executive Summary](01_EXECUTIVE_SUMMARY.md) | [Back to Index](00_CODE_REVIEW_CLAUDE_v1_20260807T1410Z.md) | [Next: Project Review ->](03_PROJECT_REVIEWS/PROJECT_001_mobile-forex-automation.md)
+[<- Previous: Executive Summary](01_EXECUTIVE_SUMMARY.md) | [Back to Index](00_CODE_REVIEW_Gemini_v1_20260807T1410Z.md) | [Next: Project Review ->](03_PROJECT_REVIEWS/PROJECT_001_mobile-forex-automation.md)
 ```
 
 ---
