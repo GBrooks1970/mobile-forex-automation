@@ -49,4 +49,10 @@ describe('CI-to-Pages deployment gate', () => {
     expect(outcomes.get('pages')).toBe('skipped');
     expect(outcomes.get('deploy')).toBe('skipped');
   });
+
+  it('configures VITE_BASE_PATH for Pages sub-path asset hosting', () => {
+    const viteConfigUrl = new URL('../../vite.config.ts', import.meta.url);
+    const configContent = readFileSync(viteConfigUrl, 'utf8');
+    expect(configContent).toContain("base: process.env['VITE_BASE_PATH'] ?? '/'");
+  });
 });

@@ -140,9 +140,19 @@ function renderShell(profile: Profile): void {
   `;
 
   applyLayout();
-  const onResize = (): void => applyLayout();
+  let resizeRaf: number | null = null;
+  const onResize = (): void => {
+    if (resizeRaf !== null) cancelAnimationFrame(resizeRaf);
+    resizeRaf = requestAnimationFrame(() => {
+      applyLayout();
+      resizeRaf = null;
+    });
+  };
   window.addEventListener('resize', onResize);
-  detachResize = () => window.removeEventListener('resize', onResize);
+  detachResize = () => {
+    if (resizeRaf !== null) cancelAnimationFrame(resizeRaf);
+    window.removeEventListener('resize', onResize);
+  };
 
   const orderForm = root.querySelector<HTMLFormElement>('[data-testid="order-form"]');
   orderForm?.addEventListener('submit', (event) => {

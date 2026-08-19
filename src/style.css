@@ -25,10 +25,13 @@ body {
 .login-pane input {
   display: block; width: 100%; margin-top: 4px; padding: 8px 10px;
   font-size: 1rem; border: 1px solid #c8d1da; border-radius: 6px;
+  touch-action: manipulation;
 }
-.login-pane button, .session-info button {
+.login-pane button, .session-info button, .close-btn {
   padding: 8px 16px; font-size: 0.95rem; border: 0; border-radius: 6px;
   background: var(--accent); color: #fff; cursor: pointer;
+  touch-action: manipulation;
+  -webkit-tap-highlight-color: transparent;
 }
 .form-errors { color: #b91c1c; font-size: 0.85rem; min-height: 1em; }
 .form-errors p { margin: 0 0 4px; }
@@ -54,10 +57,19 @@ tr.tick-down .pair-price { background: #fde3e3; color: #7f1d1d; }
 
 /* MF-06: order panel + open positions. */
 .session-info .equity b, .session-info .balance b { font-variant-numeric: tabular-nums; }
-.order-pane select, .order-pane input { display: block; margin-top: 4px; padding: 8px 10px; font-size: 1rem; border: 1px solid #c8d1da; border-radius: 6px; }
+.order-pane select, .order-pane input {
+  display: block; margin-top: 4px; padding: 8px 10px; font-size: 1rem;
+  border: 1px solid #c8d1da; border-radius: 6px;
+  touch-action: manipulation;
+}
 .order-pane label { display: block; margin-bottom: 10px; font-size: 0.9rem; }
 .order-buttons { display: flex; gap: 10px; }
-.order-buttons button { flex: 1; padding: 10px; font-size: 1rem; font-weight: 700; border: 0; border-radius: 6px; color: #fff; cursor: pointer; }
+.order-buttons button {
+  flex: 1; padding: 10px; font-size: 1rem; font-weight: 700; border: 0;
+  border-radius: 6px; color: #fff; cursor: pointer;
+  touch-action: manipulation;
+  -webkit-tap-highlight-color: transparent;
+}
 .order-buttons .buy { background: #14803a; }
 .order-buttons .sell { background: #b3261e; }
 /* table-layout: fixed keeps column widths independent of content, so a

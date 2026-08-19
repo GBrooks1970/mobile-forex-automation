@@ -12,7 +12,7 @@ export function renderWatchlist(feed: Feed): string {
     return `
       <tr data-testid="watch-row-${pair}" data-pair="${pair}" data-seq="0" data-direction="flat">
         <th scope="row" class="pair-name">${pair}</th>
-        <td class="pair-price" data-testid="watch-price-${pair}">${price}</td>
+        <td class="pair-price" data-testid="watch-price-${pair}" aria-live="polite" aria-atomic="true">${price}</td>
       </tr>`;
   }).join('');
 

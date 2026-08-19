@@ -18,12 +18,15 @@ function rowHtml(row: TradeHistoryRow): string {
     </tr>`;
 }
 
+export const MAX_DISPLAYED_HISTORY_ROWS = 50;
+
 export function renderHistory(portfolio: Portfolio): string {
   const rows = portfolio.history();
+  const displayed = rows.slice(-MAX_DISPLAYED_HISTORY_ROWS);
   const body =
-    rows.length === 0
+    displayed.length === 0
       ? `<tr data-testid="history-empty"><td colspan="6" class="hint">No closed trades yet</td></tr>`
-      : [...rows].reverse().map(rowHtml).join(''); // newest first for display
+      : [...displayed].reverse().map(rowHtml).join(''); // newest first for display
 
   return `
     <section class="pane history-pane" aria-labelledby="history-heading">

@@ -6,8 +6,8 @@
 
 # Mobile Forex Automation — Backlog
 
-**Version:** 16 — Phase 6 second-review remediation complete; CODEX-01…10 complete
-**Last Updated:** 2026-07-27
+**Version:** 17 — Phase 7 third-review remediation complete; GEMINI-01…05 complete
+**Last Updated:** 2026-08-19
 **Based on:** `docs/design-document.md` v0.8 and the Mobile Forex Trading App PRS in
 `project-specs/`. Approach fixed by `docs/adr/ADR-0001-approach.md` (web + Playwright emulation);
 state lifetime fixed by `docs/adr/ADR-0002-profile-only-persistence.md`.
@@ -197,13 +197,32 @@ below retain the delivery history; there is no outstanding roadmap work.
   model: opening creates a position without changing cash or modelling margin; realised net P&L
   changes the cash balance only on close. Review R-8 (LOW).
 
+### Phase 7 — Gemini review v1 remediation (`.review/CODE_REVIEW_Gemini_v1_20260807T1410Z/`)
+
+- **GEMINI-01 — Static asset hosting base path validation.** ✅ **DONE 2026-08-19:** added
+  contract test in `tests/unit/workflow-gate.spec.ts` proving `vite.config.ts` configures `VITE_BASE_PATH`
+  for GitHub Pages sub-path asset hosting. Review R-1 (LOW).
+- **GEMINI-02 — Accessible labeling and assistive notifications on dynamic UI elements.** ✅ **DONE 2026-08-19:**
+  added contextual `aria-label="Close position ${trade.tradeId} for ${trade.currencyPair}"` to position close
+  buttons (`src/ui/positions.ts`) and `aria-live="polite"` + `aria-atomic="true"` to watchlist price cells
+  (`src/ui/watchlist.ts`). Review R-2 (LOW).
+- **GEMINI-03 — In-memory trade history display capping.** ✅ **DONE 2026-08-19:**
+  introduced `MAX_DISPLAYED_HISTORY_ROWS = 50` constant in `src/ui/history.ts` to bound table DOM rendering
+  cost during extended trading sessions. Review R-3 (LOW).
+- **GEMINI-04 — Layout resize listener throttling.** ✅ **DONE 2026-08-19:**
+  throttled `applyLayout()` window resize callbacks using `requestAnimationFrame` in `src/main.ts` to
+  eliminate redundant DOM updates during desktop window dragging. Review R-4 (LOW).
+- **GEMINI-05 — Explicit touch-action CSS styling for mobile emulation.** ✅ **DONE 2026-08-19:**
+  added `touch-action: manipulation` and `-webkit-tap-highlight-color: transparent` to buttons, selects, and
+  inputs in `src/style.css` to prevent double-tap zoom delays on touch targets. Review R-5 (LOW).
+
 ---
 
 ## Risk Summary
 | Priority | Count | Status |
 |---|---|---|
 | **Total Outstanding** | 0 | None |
-| Resolved | 14 (MF-01…MF-14) + 6 (TRIAGE-01…06) + 10 (CODEX-01…10) | Delivery history plus completed review remediation |
+| Resolved | 14 (MF-01…MF-14) + 6 (TRIAGE-01…06) + 10 (CODEX-01…10) + 5 (GEMINI-01…05) | Delivery history plus completed review remediation |
 
 ---
 
