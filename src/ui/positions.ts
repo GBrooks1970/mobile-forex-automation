@@ -18,7 +18,7 @@ function rowHtml(trade: OpenTrade, floatingPence: number): string {
       <td data-testid="position-entry-${trade.tradeId}">${formatPricePts(trade.currencyPair, trade.entryPricePts)}</td>
       <td data-testid="position-price-${trade.tradeId}">${formatPricePts(trade.currencyPair, trade.currentPricePts)}</td>
       <td class="pnl ${pnlClass}" data-testid="position-pnl-${trade.tradeId}">${formatGbpPence(floatingPence)}</td>
-      <td><button type="button" class="close-btn" data-testid="position-close-${trade.tradeId}" data-close="${trade.tradeId}">Close</button></td>
+      <td><button type="button" class="close-btn" data-testid="position-close-${trade.tradeId}" data-close="${trade.tradeId}" aria-label="Close position ${trade.tradeId} for ${trade.currencyPair}">Close</button></td>
     </tr>`;
 }
 
